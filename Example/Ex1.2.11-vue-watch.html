@@ -72,7 +72,7 @@ const vm = new Vue({
     },
     watch: {
 
-        msgCallback: function(newVal, oldVal) {
+        msgCallback: function (newVal, oldVal) {
 
             // console.log(`newVal: ${newVal}, oldVal: ${oldVal}`);
             console.log('msgCallback changed');
@@ -88,6 +88,11 @@ const vm = new Vue({
             },
 
             deep: true,                 // 开启深度监听: 监听对象中的所有属性
+        },
+
+        'msgObj.age': function () {
+
+            console.log('msgObj.prop changed');
         }
     }
 });
@@ -118,17 +123,15 @@ const vm = new Vue({
  *         options ...
  *     },
  *
- *     targetKey: [
+ *     targetKey: [                                             // array
  *
  *         targetKey: callback,
  *         targetKey: string,
  *         targetKey: object,
  *     ],
  *
- *
  *     'targetObj.prop': callback, methodStr                    // 监听对象中的指定属性( 属性名必须是字符串 )
  * }
- *
  */
 
 
@@ -136,9 +139,9 @@ const vm = new Vue({
 
 
 /**
- * vm.$watch(target, options: obj): ;
+ * vm.$watch(target, options: obj);                             // two params
  *
- * @target: targetObj | 'targetObj.prop' | computedFn;
+ * @target: targetData | targetObj | 'targetObj.prop' | computedFn;
  *
  * @options: {
  *
@@ -150,12 +153,12 @@ const vm = new Vue({
  * }
  *
  *
- * vm.$watch(target, callback, ?options: obj);
+ * vm.$watch(target, callback, ?options: obj);                  // three params
  *
  *
  * @callback: function() {
  *
- *          ?unwatch();             // 取消监听
+ *     ?unwatch();             // 取消监听
  * }
  *
  * @options: {
@@ -163,18 +166,78 @@ const vm = new Vue({
  *     deep: boolean,
  *     immediate: boolean
  * }
- *
  */
+
+
+// vm.$watch('msg', function () {
+//
+//     console.log('msgMethod changed');
+//
+// }, {
+//
+//     deep: false,
+//     immediate: false
+// });
+
+
+// vm.$watch('msg', {
+//
+//     handle() {
+//
+//         console.log('msgObj changed');
+//     },
+//
+//     deep: false,
+//     immediate: false
+//
+// });
+
+
+// vm.$watch('msgObj.age', {
+//
+//     handle() {
+//
+//         console.log('msgObj.prop changed');
+//     },
+//
+//     deep: false,
+//     immediate: false
+// });
+
+
+// var unwatch = vm.$watch('msgStr', function (newVal) {
+//
+//         if (unwatch) {
+//
+//             console.log('xxx');
+//
+//             unwatch();
+//
+//             return;
+//         }
+//
+//         console.log('hhh');
+//     },
+//     {
+//         immediate: false
+//
+//     });
 
 
 //-------------------------------------------------------------------------------------------------------------------//
 
 
 /**
- * watch vs computedProp
+ * watch vs computed
  *
  *
+ * 1) 两者都可以观察和响应 Vue 实例上的数据的变动
  *
+ * 2) watch 擅长处理一个数据影响多个数据
+ *    computed 擅长处理多个数据影响一个数据
+ *
+ * 3）watch 中可以执行异步
+ *   computed 中不可以
  *
  */
 

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+
+
+    </style>
+
+</head>
+<body>
+
+
+<!--================================================================================================================-->
+
+
+<div id="app">
+
+    computedFullName: {{ computedFullName }}
+
+    <hr>
+
+    watchFullName: {{ watchFullName }}
+
+</div>
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+        msg: 'hello world',
+
+        computedFirstName: 'Alpha',
+        computedLastName: 'oO',
+
+        watchFirstName: 'Beta',
+        watchLastName: 'zZ',
+        watchFullName: 'BetazZ'
+    },
+    methods: {},
+    computed: {
+
+        computedFullName() {
+
+            return this.computedFirstName + this.computedLastName;
+        }
+    },
+    watch: {
+
+        watchFirstName() {
+
+            this.watchFullName = this.watchFirstName + this.watchLastName;
+        },
+        watchLastName() {
+
+            this.watchFullName = this.watchFirstName + this.watchLastName;
+        }
+    }
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * watch vs computed
+ *
+ *
+ * 1) 两者都可以观察和响应 Vue 实例上的数据的变动
+ *
+ * 2) watch 擅长处理一个数据影响多个数据
+ *    computed 擅长处理多个数据影响一个数据
+ *
+ * 3）watch 中可以执行异步                        // watch 的最终结果依赖 Fn
+ *   computed 中不可以                           // computed 的最终结果依赖 Fn.return
+ *
+ */
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>
