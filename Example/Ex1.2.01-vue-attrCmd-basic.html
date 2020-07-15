@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+
+    [v-cloak] {
+        display: none;
+    }
+
+    </style>
+
+</head>
+<body>
+<!--================================================================================================================-->
+
+
+<div id="app" v-cloak>
+
+
+    <span v-pre>v-pre: {{ msg }}</span>     <!-- 不会被 vue 编译 -->
+
+
+    <div v-cloak>v-clock: {{ msg }}</div>   <!-- 会一直保留在 dom 元素上，直到 dom 编译结束后，会自动去除 -->
+
+
+    <div v-once>v-once: {{ msg }}</div>     <!-- 只渲染元素一次，随后的重新渲染，元素及其所有的子节点将被视为静态内容并跳过 -->
+
+
+    <div v-text="msg">v-text: 该内容会被清空并覆盖</div>      <!-- 和下面的一样 -->
+    <div v-text="msg">----</div>
+    <div>{{msg}}</div>
+
+    <div>----{{msg}}----</div>              <!-- 只替换自己"{{msg}}"，不清空元素内容 -->
+
+    <div v-text="sayHello">{{ msg }}</div>
+
+
+</div>
+
+
+<!-------------------------------------------------------------------------------------------------------------------->
+<hr>
+
+
+<div id="demo">
+    hello gays
+    <div>test</div>
+</div>
+
+
+<!-------------------------------------------------------------------------------------------------------------------->
+<hr>
+
+
+<input type="text"/>
+<button>点击</button>
+<div id="app1">
+    <div v-html="msg"></div>
+</div>
+
+
+<script>
+
+// const vm = new Vue({
+//     el: '#app1',
+//     data: {
+//         msg: 'hello world'
+//     }
+// });
+//
+// const oInput = document.getElementsByTagName('input')[0];
+// const oButton = document.getElementsByTagName('button')[0];
+//
+// let msg = null;
+// oButton.onclick = function () {
+//     vm.msg = oInput.value;
+// }
+
+</script>
+
+
+<hr>
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const vm = new Vue({
+
+    el: '#app',
+
+    data: {
+        msg: 'just do it',
+        sayHello: 'hello world',
+        html: '<span>{{ msg }}}</span>>'
+    }
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * vue 相关指令         // 特点: 前缀( v- )
+ *
+ *
+ * 具有特殊含义、用于有特殊功能的特性 attribute
+ *
+ * 可以直接使用在 data 中的数据
+ */
+
+// <div v-cmd>{{ data }}</div>
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * v-pre
+ *
+ *
+ * 跳过元素和身和子元素的编译过程，跳过没有指令的节点，加速编译
+ *
+ * 可以用来显示原始 Mustache 标签
+ */
+
+// <span v-pre>{{ msg }}</span>                        <!-- 不会被 vue 编译 -->
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * v-cloak              // 解决页面闪烁
+ *
+ *
+ * 会一直保留在 dom 元素上，直到 dom 编译结束后，会自动去除
+ *
+ * 和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕
+ */
+
+// <div v-cloak>v-clock: {{ msg }}</div>       <!-- 会一直保留在 dom 元素上，直到 dom 编译结束后，会自动去除 -->
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * v-once
+ *
+ *
+ * 只渲染元素一次，随后的重新渲染，元素及其所有的子节点将被视为静态内容并跳过
+ *
+ * 可以用于优化更新性能
+ */
+
+// <div v-once>v-once: {{ msg }}</div>     <!-- 只渲染元素一次，随后的重新渲染，元素及其所有的子节点将被视为静态内容并跳过 -->
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * v-text
+ *
+ *
+ * " 更新 元素内容 textContent / dom.innerText ",
+ * " 更新 插值表达式 {{}} ",
+ * " 更新 v-text 替换元素中的所有文本 ",
+ * " 更新 {{}} ( mustache 胡子语法 ): 仅替换自己，不清空内容 "
+ */
+
+
+
+// <div v-text="msg">v-text: 该内容会被清空并覆盖</div>      <!-- 和下面的一样 -->
+// <div v-text="msg">----</div>                           <!-- 和下面的一样 -->
+// <div>{{msg}}</div>
+
+
+// <div>----{{msg}}----</div>              <!-- 只替换自己"{{msg}}"，不清空元素内容 -->
+
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * textContent( IE8+ ) vs innerText( IE 原生 )
+ *
+ *
+ * textContent: 获取指定dom元素下的所有元素节点, innerText: 仅获取文本节点
+ * innerText 受到 css 影响，不获取隐藏元素的文本
+ * innerText 受到 触发页面重新渲染
+ * textContent: 标准方法, innerText: IE 引入
+ */
+
+// <div id="demo">
+//     hello world
+// <div>test</div>
+// </div>
+
+const demo = document.getElementById("demo");
+
+
+console.log(demo.textContent);              // 包含所有节点
+
+//
+//
+// hello world
+// test
+
+
+console.log(demo.innerText);                // 仅包含文本节点
+
+// hello world
+// test
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * v-html               // 谨慎使用，避免 XSS 攻击
+ *
+ *
+ * 内容按普通 HTML 插入，不会作为 Vue 模板进行编译
+ *
+ * 仅作用于可信的内容上使用，不要用于用户提交的内容
+ *
+ * 更新元素的 innerHTML, 仅可插入字符串，不可插入模版字符串
+ */
+
+
+// <input type="text"/>
+// <button>点击</button>
+// <div id="app1">
+//     <div v-html="msg"></div>
+// </div>
+
+const vm = new Vue({
+    el: '#app1',
+    data: {
+        msg: 'hello world'
+    }
+});
+
+const oInput = document.getElementsByTagName('input')[0];
+const oButton = document.getElementsByTagName('button')[0];
+
+let msg = null;
+
+oButton.onclick = function () {
+
+    vm.msg = oInput.value;                  // 若此时用户有意将 死循环输入，则会导致网站进入死循环
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

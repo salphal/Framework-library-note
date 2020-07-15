@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+
+
+    </style>
+
+</head>
+<body>
+
+
+<!--================================================================================================================-->
+
+
+<div id="app">
+
+
+    msgCallback:
+    {{ msgCallback }}
+
+
+    <hr>
+
+
+    msgStr:
+    {{ msgStr }}
+
+
+    <hr>
+
+
+    msgObj:
+    {{ msgObj }}
+
+
+</div>
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+
+        msgCallback: 'hello world',
+
+        msgStr: 'just do it',
+
+        msgObj: {
+            name: 'alpha',
+            age: 18
+        }
+    },
+    methods: {
+
+        msgMethod() {
+
+            console.log('msgMethod changed');
+        }
+    },
+    watch: {
+
+        msgCallback: function(newVal, oldVal) {
+
+            // console.log(`newVal: ${newVal}, oldVal: ${oldVal}`);
+            console.log('msgCallback changed');
+        },
+
+        msg2: 'msgMethod',
+
+        msgObj: {
+
+            handle() {
+
+                console.log('msgObj changed');
+            },
+
+            deep: true,                 // 开启深度监听: 监听对象中的所有属性
+        }
+    }
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * watch === vm.$watch
+ *
+ *
+ * watch: {
+ *
+ *     targetKey: callback(newVal, oldVal),                     // function
+ *
+ *     targetKey: 'methodStr',                                  // string
+ *
+ *     targetKey: {                                             // object
+ *
+ *
+ *         handle: callback(newVal, oldVal),        // must-condition
+ *
+ *         deep: boolean,                           // def: false       开启后性能开销较大
+ *
+ *         immediate: boolean,                      // def: false       立即调用监听的会掉函数，而不是等待数据改变才监听
+ *
+ *         options ...
+ *     },
+ *
+ *     targetKey: [
+ *
+ *         targetKey: callback,
+ *         targetKey: string,
+ *         targetKey: object,
+ *     ],
+ *
+ *
+ *     'targetObj.prop': callback, methodStr                    // 监听对象中的指定属性( 属性名必须是字符串 )
+ * }
+ *
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * vm.$watch(target, options: obj): ;
+ *
+ * @target: targetObj | 'targetObj.prop' | computedFn;
+ *
+ * @options: {
+ *
+ *     handle(){
+ *
+ *     },
+ *     ?deep: boolean,
+ *     ?immediate: boolean
+ * }
+ *
+ *
+ * vm.$watch(target, callback, ?options: obj);
+ *
+ *
+ * @callback: function() {
+ *
+ *          ?unwatch();             // 取消监听
+ * }
+ *
+ * @options: {
+ *
+ *     deep: boolean,
+ *     immediate: boolean
+ * }
+ *
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * watch vs computedProp
+ *
+ *
+ *
+ *
+ */
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>

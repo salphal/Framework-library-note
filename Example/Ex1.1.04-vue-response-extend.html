@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+
+
+<!--
+<div id="app">
+
+    {{ obj }}
+
+</div>
+
+<script>
+
+    const vue = new Vue({
+
+        el: '#app',
+
+        data: {
+
+            obj: {
+                a: 1,
+                b: 10
+            }
+        }
+    });
+
+
+</script>
+-->
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/**
+ * vue 响应式原理
+ *
+ *
+ * Object.defineProperty        // 监听指定对象属性的改变( 无法监听对象的'增删属性' )
+ *
+ * 缺点: 需要递归监听对象中的对象
+ *      选择不用 Object.defineProperty 监测数组，因为性能的消耗和用户体验不成正比
+ *      监听不到数组不存在的索引变化
+ *      监听不到数组长度的改变
+ *      监听不到对象的增删
+ *
+ */
+
+
+const data = {
+    name: 'alpha',
+    age: 18,
+    arr: [1, 2, 3, 4],
+    like: {
+        girl: 'alix',
+        money: 'more'
+    }
+};
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+<script>
+
+
+// function defineReactive(data, key, _val) {
+//
+//     observer(_val);
+//
+//     Object.defineProperty(data, key, {
+//
+//         get() {
+//
+//             console.log('get');
+//
+//             return _val;
+//         },
+//
+//         set(val) {
+//
+//             console.log('set');
+//
+//             if (_val === val) {
+//
+//                 return;
+//             }
+//
+//             _val = val;
+//         }
+//     });
+// }
+//
+// const arrayProto = Array.prototype,
+//     arrayMethods = Object.create(arrayProto);               // 减少对 Array 原型的污染
+//
+// ['push', 'pop', 'shift', 'unshift', 'sort', 'splice', 'reverse'].forEach(method => {
+//
+//     arrayMethods[method] = function () {
+//
+//         arrayProto[method].call(this, ...arguments);
+//
+//         render();
+//     };
+// });
+//
+// function observer(data) {
+//
+//     if (Array.isArray(data)) {
+//
+//         data.__proto__ = arrayMethods;                      // 使用复制出来的原型
+//
+//         return;
+//     }
+//
+//     if (typeof data === 'object') {
+//
+//         for (let key in data) {
+//
+//             defineReactive(data, key, data[key]);
+//         }
+//     }
+// }
+//
+// function render() {
+//
+//     console.log('page rendered');
+// }
+//
+// observer(data);
+
+
+</script>
+
+<script>
+
+
+class MyVueArrMethod {
+
+    constructor(data) {
+
+        this.data = data;
+        this.newMethods = ['push', 'pop', 'shift', 'unshift', 'sort', 'splice', 'reverse'];
+        this.arrProto = Array.prototype;
+        this.arrProtoClone = Object.create(this.arrProto);
+    }
+
+    init() {
+
+        this.observer(this.data);
+        this.rewriteArrMethods();
+
+    }
+
+    defineReactive(data, key, _val) {
+
+        this.observer(_val);
+
+        const that = this;
+
+        Object.defineProperty(data, key, {
+
+            get() {
+
+                return _val;
+
+            },
+
+            set(val) {
+
+                if (val === _val) {
+
+                    return;
+                }
+
+                _val = val;
+
+                MyVueArrMethod.render();
+            }
+        });
+    }
+
+    rewriteArrMethods() {
+
+        const that = this;
+
+        this.newMethods.forEach(method => {
+
+            this.arrProtoClone[method] = function () {
+
+                that.arrProto[method].call(this, ...arguments);
+            };
+        });
+    }
+
+    observer(data) {
+
+        if (Array.isArray(data)) {
+
+            data.__proto__ = this.arrProtoClone;
+
+            MyVueArrMethod.render();
+        }
+
+        if (typeof data === 'object') {
+
+            for (let key in data) {
+
+                this.defineReactive(data, key, data[key]);
+            }
+        }
+    }
+
+    static render() {
+
+        console.log('page rendered');
+    }
+}
+
+const myVueArrMethod = new MyVueArrMethod(data);
+
+myVueArrMethod.init();
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+
+
+    </style>
+
+</head>
+<body>
+
+
+<!--================================================================================================================-->
+
+
+<div id="app">
+
+    <div>
+        <label>
+
+            <!-- input[type="text"] @input: str-value -->
+
+            <input type="text" v-model="msg">
+
+            <!-- <input type="text" v-model="msg" @input="msg = $event.target.value" :value="msg">-->
+
+        </label>
+    </div>
+
+
+    <hr>
+
+    <div>
+
+        <!-- input[type="checkbox"] @change: checked -->
+
+        <!-- singleInputChecked: boolean-checked; -->
+        <!-- multipleInputChecked: arr-checked; -->
+
+        <label>alpha<input type="checkbox" id="a" value="alpha" v-model="checkList"></label>
+        <label>beta<input type="checkbox" id="b" value="beta" v-model="checkList"></label>
+        <label>omega<input type="checkbox" id="c" value="omega" v-model="checkList"></label>
+
+    </div>
+
+
+    <hr>
+
+
+    <div>
+
+        <!-- input[type="radio"] @change: str-checked -->
+
+        <label>alpha<input type="radio" id="d" value="alpha" v-model="picked"></label>
+        <label>beta<input type="radio" id="e" value="beta" v-model="picked"></label>
+        <label>omega<input type="radio" id="f" value="omega" v-model="picked"></label>
+
+    </div>
+
+
+    <hr>
+    <hr>
+
+
+    <div>
+        <label>
+
+            <!-- textarea @change: str-value -->
+
+            <textarea name="txt-area" id="txt-area" cols="30" rows="10" v-model="multipleText">
+
+            </textarea>
+
+        </label>
+    </div>
+
+
+    <hr>
+    <hr>
+
+
+    <div>
+        <label>
+
+            <!-- singleSelect: str-value -->
+
+            <select name="elect-1" id="select-1" v-model="select">
+                <option value="c" disabled>choose</option>
+                <option value="j">alpha</option>
+                <option value="q">beta</option>
+                <option value="k">omega</option>
+            </select>
+
+            <!-- multipleSelect: arr-value -->
+
+            <select name="select-2" id="select-2" v-model="selectList" multiple>
+                <option value="p">alpha</option>
+                <option value="o">beta</option>
+                <option value="u">omega</option>
+            </select>
+
+        </label>
+
+    </div>
+
+
+    <hr>
+    <hr>
+
+
+    <div>
+
+        <label>
+            v-model.lazy:
+            <input type="text" v-model.lazy="msg">
+        </label>
+
+    </div>
+
+
+    <hr>
+
+
+    <div>
+
+        <label>
+            v-model.number:
+            <input type="text" v-model.number="msg">
+        </label>
+
+    </div>
+
+
+    <hr>
+
+
+    <div>
+
+        <label>
+            v-model.trim:
+            <input type="text" v-model.trim="msg">
+        </label>
+
+    </div>
+
+
+    <hr>
+
+
+</div>
+
+
+<!-------------------------------------------------------------------------------------------------------------------->
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+
+        msg: 'hello world',                     // input[type="text"] @input: str-val;
+
+        checked: true,                          // input[type="text"]
+        checkList: [],                          // input[type="text"]
+
+        picked: '',                             //
+
+        multipleText: 'just do it',             //
+
+        select: 'choose',                       //
+        selectList: [],                         //
+
+
+    }
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * v-model              // 双向数据绑定( 双向链路 )
+ *
+ *
+ * 可以在 "表单元素" & "组件" 上创建双向数据绑定
+ *
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * v-model modifier
+ *
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * .lazy                    // 降低一直监听所消耗的性能
+ *
+ *
+ * 仅当触发 同步事件 时，才同步 input.value 中的数据
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * .number
+ *
+ *
+ * 将 input.value 的类型转换为 number
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * .trim
+ *
+ *
+ * 去除 input.value 中的所有空格
+ */
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>

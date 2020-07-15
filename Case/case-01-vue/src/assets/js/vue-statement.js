@@ -17,29 +17,29 @@ import Vue from "vue";
 
 // vueModule - usage 1
 
-const vueModule1 = new Vue({
-
-    /**
-     * el: element | selector;
-     *
-     *
-     * 用于设置 vue-module 控制的区域
-     */
-
-    el: '#vue-module',
-
-    /**
-     * data: obj;
-     *
-     *
-     * 用于存放需要用的数据( 响应式数据 )
-     */
-
-    data: {
-        msg: 'hello world'
-    }
-
-});
+// const vueModule1 = new Vue({
+//
+//     /**
+//      * el: element | selector;
+//      *
+//      *
+//      * 用于设置 vue-module 控制的区域
+//      */
+//
+//     el: '#vue-module',
+//
+//     /**
+//      * data: obj;
+//      *
+//      *
+//      * 用于存放需要用的数据( 响应式数据 )
+//      */
+//
+//     data: {
+//         msg: 'hello world'
+//     }
+//
+// });
 
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
@@ -92,20 +92,6 @@ const vueModule1 = new Vue({
 // {{ 1 + 1 }}
 // {{ !0 }}
 // {{ 1 + 1 === 2 ? 'do it' : 'just' }}
-
-
-//-------------------------------------------------------------------------------------------------------------------//
-
-
-/**
- * auto-reload
- *
- *
- *
- */
-
-
-
 
 
 

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+
+<!--================================================================================================================-->
+
+
+<div id="app">
+
+
+    <!-- 绑定 class -->
+
+    <!-- <div :class="{ red: isRed }">test - 1</div>                         &lt;!&ndash; 绑定对象 &ndash;&gt;-->
+
+    <!-- <div :class="[ red, green ]">test - 2</div>                         &lt;!&ndash; 绑定数组 &ndash;&gt;-->
+
+    <!-- <div :class="[ red, green ]" class="red">test - 2</div>             &lt;!&ndash; 绑定的特性 class 可以和静态的 class 共存
+     &ndash;&gt;-->
+
+    <!-- <div :class="[ red: isRed, green: isGreen ]">test - 3</div>         &lt;!&ndash; 数组中可以使用对象语法 &ndash;&gt;-->
+
+
+    <!-- 绑定 style -->
+
+    <!-- 碰到 text-align 用横线连接的字符名车时，必须使用 小驼峰命( demoName )，增加引号( 'demo-name' )-->
+
+    <!-- <div :style="{ color: 'red', width: '100px', backgroundColor: 'yellow', 'text-align': 'left' }">hello world</div>-->
+
+    <!-- <div :style="styleObjA">hello world</div>                          &lt;!&ndash; 绑定对象 &ndash;&gt;-->
+
+    <!-- <div :style="[styleObjA, styleObjB]">hello world</div>             &lt;!&ndash; 绑定数组: 数组中可引入多个对象 &ndash;&gt;-->
+
+
+    <!-- <svg :view-box.camel="viewBox"></svg>                              &lt;!&ndash; 使用 camel 时，属性必须使用短横线连接 &ndash;&gt;-->
+
+    <!--    <div :text-content.prop = "'alpha'" ></div>                     &lt;!&ndash; 绑定的特性将作为 属性使用 &ndash;&gt;-->
+
+
+</div>
+
+
+<br>
+
+<!-------------------------------------------------------------------------------------------------------------------->
+
+
+<div id="demo"></div>
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+        red: 'redClass',
+        green: 'greenClass',
+        isRed: true,
+        styleObjA: {
+            color: 'red',
+            width: '100px',
+            backgroundColor: 'yellow'
+        },
+        styleObjB: {
+            height: '100px',
+            lineHeight: '100px'
+        },
+        viewBox: '0 0 100 100'
+    }
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * v-bind:attr = val <===> :attr = val          // 静态绑定特性
+ *
+ * v-bind:[attr] = val                          // 动态绑定特性( vue 2.6.0+ )
+ *
+ *
+ * 动态绑定一个或多个特性
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 绑定单个特性
+ *
+ *
+ */
+
+<!-- 绑定一个属性 -->
+// <img v-bind:src="imageSrc">
+
+<!-- 动态特性名 (2.6.0+) -->
+// <button v-bind:[key]="value"></button>
+
+<!-- 缩写 -->
+// <img :src="imageSrc">
+
+<!-- 动态特性名缩写 (2.6.0+) -->
+// <button :[key]="value"></button>
+
+<!-- 内联字符串拼接 -->
+// <img :src="'/path/to/images/' + fileName">
+
+
+/**
+ * 绑定多个特性
+ *
+ *
+ * 没有参数时，可以绑定到一个包含键值对的对象
+ *
+ * 注意此时 class 和 style 绑定不支持数组和对象
+ */
+
+<!-- 绑定一个有属性的对象 -->
+// <div v-bind="{ id: someProp, 'other-attr': otherProp }"></div>
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 针对 class & style 特性的绑定时
+ *
+ *
+ * 字符串的绑定麻烦且易错，所以 vue 做了额增强，表达式除了字符串之外，还可以是 数组 或 对象
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 绑定 class
+ *
+ *
+ * 不会和静态的 class 冲突，vue 编译后的 className 仅会添加进静态元素的 class
+ */
+
+// <!-- <div :class="{ red: isRed }">test - 1</div>                         &lt;!&ndash; 绑定对象 &ndash;&gt;-->
+//
+// <!-- <div :class="[ red, green ]">test - 2</div>                         &lt;!&ndash; 绑定数组 &ndash;&gt;-->
+//
+// <!-- <div :class="[ red: isRed, green: isGreen ]">test - 3</div>         &lt;!&ndash; 数组中可以使用对象语法 &ndash;&gt;-->
+
+
+/**
+ * 绑定 style
+ *
+ *
+ * 自动补全浏览器兼容前缀( 当同一特性的 )
+ */
+
+// <!-- 碰到 text-align 用横线连接的字符名车时，必须使用 小驼峰命( demoName )，增加引号( 'demo-name' )-->
+//
+// <!-- <div :style="{ color: 'red', width: '100px', backgroundColor: 'yellow', 'text-align': 'left' }">hello world</div>-->
+//
+// <!-- <div :style="styleObjA">hello world</div>                          &lt;!&ndash; 绑定对象 &ndash;&gt;-->
+//
+// <!-- <div :style="[styleObjA, styleObjB]">hello world</div>             &lt;!&ndash; 绑定数组: 数组中可引入多个对象 &ndash;&gt;-->
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 修饰符
+ *
+ *
+ *
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * camel                        // 使用 camel 时，属性必须使用短横线连接
+ *
+ *
+ * vue 在编译过程中，会将特性的名称转化为 小写，解决 部分需要特性需要大写的问题，
+ *
+ * 会将 短字符线连接的 特性名称，转变为 小驼峰命名
+ *
+ * demo-name ---> demoName
+ */
+
+// <svg :view-box.camel="viewBox"></svg>               <!-- 使用 camel 时，属性必须使用短横线连接 -->
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * prop
+ *
+ *
+ * 用于绑定 dom 属性
+ */
+
+// <!--    <div :text-content.prop = "'alpha'" ></div>                     &lt;!&ndash; 绑定的特性将作为 属性使用 &ndash;&gt;-->
+
+
+for (let key in demo) {
+
+    console.log(key);               // 循环出元素身上包含的属性
+}
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * sync
+ *
+ *
+ *
+ */
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>

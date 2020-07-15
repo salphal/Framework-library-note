@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+
+
+<!--================================================================================================================-->
+
+
+<!--<div id="app">
+
+    &lt;!&ndash; 性能消耗偏高 &ndash;&gt;
+
+    <ul>
+        <li v-for="val in persons" v-if="val.isActive">
+            {{ val.name }}
+        </li>
+    </ul>
+
+</div>-->
+
+
+<div id="app">
+
+    <ul>
+        <li v-for="val in activePersons">
+            {{ val.name }}
+        </li>
+    </ul>
+
+</div>
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// const vm = new Vue({
+//
+//     el: '#app',
+//     data: {
+//         persons: [
+//             {name: 'Person-1', age: 16, isActive: true},
+//             {name: 'Person-2', age: 17, isActive: false},
+//             {name: 'Person-3', age: 18, isActive: false},
+//             {name: 'Person-4', age: 18, isActive: true}
+//         ],
+//     },
+// });
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+        persons: [
+            {name: 'Person-1', age: 16, isActive: true},
+            {name: 'Person-2', age: 17, isActive: false},
+            {name: 'Person-3', age: 18, isActive: false},
+            {name: 'Person-4', age: 18, isActive: true}
+        ],
+        activePersons: []
+    },
+});
+
+vm.activePersons = vm.persons.filter(val => val.isActive);
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * v-for + v-if             // 性能消耗偏高
+ *
+ *
+ * v-for 执行优先级较高，会优先执行 v-for 循环遍历之后，再对每个子项进行 v-if 判断
+ *
+ * 无论需要判断的是哪些条件，vue 都会将所有子项全部渲染一遍
+ */
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>

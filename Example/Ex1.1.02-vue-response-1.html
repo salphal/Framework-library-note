@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+
+
+<div id="vm-response">
+
+    {{ msg }}
+
+</div>
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const vmResponse = new Vue({
+
+    el: '#vm-response',
+
+    data: {
+
+        msg: 'just do it',
+        alpha: {
+            name: '阿尔法',
+            age: 18,
+            height: '183cm',
+            wife: ['a', 'b', 'c']
+        }
+    }
+});
+
+vmResponse.msg = 'just so so';
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/**
+ * vm-response
+ *
+ * vue 2.0: Object.defineProperty           // 数据劫持
+ * vue 3.0: proxy
+ *
+ * 创建 new vm 时，vm 会把 options.data 中的属性赋予到 当前捆绑的元素上
+ *
+ * 当数据改变，页面会重新渲染
+ */
+
+// const vm = new Vue({
+//     el: 'demo1',
+//     data: {
+//         name: "demo1",
+//         age: 18
+//     }
+// });
+//
+// vm.name
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 为什么 data 会直接出现在 vm 实例对象中 ?
+ *
+ *
+ * 当创建 vue 实例对象时，vue 会将 data 中的成员代理给 vue 实例
+ *
+ * 目的是为了实现响应式，监控数据变化，执行某个监听函数
+ */
+
+
+/**
+ * const vm = new Vue(options);
+ *
+ *
+ * vm.prop === options.data.prop;          // options.data 的属性会被赋予到 实例对象上
+ *
+ *
+ */
+
+const vmResponse = new Vue({
+
+    el: '#vm-response',
+
+    data: {
+
+        msg: 'just do it',
+        alpha: {
+            name: '阿尔法',
+            age: 18,
+            height: '183cm',
+            wife: ['a', 'b', 'c']
+        }
+    }
+});
+
+
+// console.log(vmResponse);
+// console.log(vmResponse.alpha.name);
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * vue 实例对象中，除了data 外的属性和方法
+ *
+ *
+ * $publicProp: 提供给开发者使用的属性或方法
+ * _privateProp: vue 私有的属性和方法
+ *
+ *
+ * 为了更好的解决属性名冲突
+ */
+
+
+// console.log(Vue);
+
+// Vue
+// $attrs: (...)
+// $children: []
+// $createElement: ƒ (a, b, c, d)
+// $el: div#vm-render
+// $listeners: (...)
+// $options: {components: {…}, directives: {…}, filters: {…}, el: "#vm-render", _base: ƒ, …}
+// $parent: undefined
+// $refs: {}
+// $root: Vue {_uid: 1, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}
+// $scopedSlots: {}
+// $slots: {}
+// $vnode: undefined
+// alpha: (...)
+// msg: (...)
+// _c: ƒ (a, b, c, d)
+// _data: {__ob__: Observer}
+// _directInactive: false
+// _events: {}
+// _hasHookEvent: false
+// _inactive: null
+// _isBeingDestroyed: false
+// _isDestroyed: false
+// _isMounted: true
+// _isVue: true
+// _renderProxy: Proxy {_uid: 1, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}
+// _self: Vue {_uid: 1, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}
+// _staticTrees: null
+// _uid: 1
+// _vnode: VNode {tag: "div", data: {…}, children: Array(1), text: undefined, elm: div#vm-render, …}
+// _watcher: Watcher {vm: Vue, deep: false, user: false, lazy: false, sync: false, …}
+// _watchers: [Watcher]
+// $data: (...)
+// $isServer: (...)
+// $props: (...)
+// $ssrContext: (...)
+// get $attrs: ƒ reactiveGetter()
+// set $attrs: ƒ reactiveSetter(newVal)
+// get $listeners: ƒ reactiveGetter()
+// set $listeners: ƒ reactiveSetter(newVal)
+// get alpha: ƒ proxyGetter()
+// set alpha: ƒ proxySetter(val)
+// get msg: ƒ proxyGetter()
+// set msg: ƒ proxySetter(val)
+// __proto__: Object
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 无法监听和渲染不存在的数据
+ *
+ *
+ * 1) 更改的数据必须是存在的数据，否则不能重新渲染页面，因为 vue 无法监测不存在的数据
+ *
+ * 2) 更改的数据必须是已渲染过的数据，否则从性能角度考虑( 节省性能 )，不会重新渲染页面
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 更改数据后，页面是否会立即重新渲染
+ *
+ *
+ * 渲染页面是异步的
+ */
+
+
+// 同步执行栈 <--- ( 异步队列 <--- 微任务 <--- 宏任务 )
+
+
+// 同步测试，是否页面会立即渲染
+
+vmResponse.msg = 'one';
+console.log(vmResponse.msg, vmResponse.$el.innerText);            // one just do it
+
+vmResponse.msg = 'two';
+console.log(vmResponse.msg, vmResponse.$el.innerText);            // two just do it
+
+vmResponse.msg = 'three';
+console.log(vmResponse.msg, vmResponse.$el.innerText);            // three just do it
+
+
+// 异步渲染( 微任务优先于宏任务 )后，页面数据才改变
+
+// setTimeout(() => { // 宏任务，但部分有浏览不支持 setTimeout
+//
+//     console.log(vmResponse.msg, vmResponse.$el.innerText);        // three three
+//
+// }, 0);
+
+vmResponse.$nextTick().then((function () {
+
+    console.log(this);                  // vue
+
+    console.log(vmResponse.msg, vmResponse.$el.innerText);        // three three
+
+}));
+
+Vue.nextTick().then((function () {
+
+    console.log(this);                  // window
+
+    console.log(vmResponse.msg, vmResponse.$el.innerText);        // three three
+
+}));
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * vm.$nextTick(); & Vue.nextTick();                // 在页面重新渲染，DOM更新后，会立刻执行该方法
+ *
+ *
+ * vm.$nextTick(): promise;                         // this => vm = new Vue();
+ * Vue.nextTick(): promise;                         // this => window
+ *
+ *
+ * vue: 等待主线程，异步任务会等待 同步执行栈 处理完所有任务后再执行
+ * rect: 让出主线程，主线程有空就会执行异步任务
+ *
+ *
+ * 异步渲染页面
+ */
+
+
+if (typeof Promise !== 'undefined') {                       // 微任务
+
+    // Promise.resolve.then();
+
+} else if (typeof MutationObserver !== 'undefined') {       // 微任务
+
+    // MutationObserver( 突变观察，创建假节点制造微改动，查看是否有返回值 )
+
+} else if (typeof setImmediate !== 'undefined') {           // 宏任务
+
+    // IE
+
+} else {                                                    // 宏任务
+
+    // setTimeout
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+
+
+<!--================================================================================================================-->
+
+
+<div id="app">
+
+
+    <h3>Event Modifier</h3>
+
+
+    <div @click="alert('div')">
+
+        <!-- event.stop: 阻止事件冒泡 -->
+
+        event.stop:
+        <button @click.stop="alert('button')"> click</button>
+
+    </div>
+
+
+    <hr>
+
+
+    <!-- event.prevent: 阻止表单的默认提交事件 -->
+
+    <form @submit.prevent="onSubmit">
+
+        event.prevent:
+        <input type="submit">
+
+    </form>
+
+
+    <hr>
+
+
+    <!-- event.capture: 触发 "事件捕获" -->
+
+    <div @click.capture="alert('div')">
+
+        event.capture:
+        <button @click="alert('button')">click</button>
+
+    </div>
+
+
+    <hr>
+
+
+    <!-- event.self: 仅触发自身的事件( 但仍然会触发事件冒泡 )-->
+
+    <div @click.self="alert('div')">
+
+        event.self:
+        <button @click="alert('button')">click</button>
+
+    </div>
+
+
+    <hr>
+
+
+    <div @click="alert('div')">
+
+        <!-- event.once: 事件只触发一次 ( vue2.1.4+ )-->
+
+        event.once:
+        <button @click.once="alert('button')">click</button>
+
+    </div>
+
+
+    <hr>
+
+
+    <!--    即使在触发触摸事件时，执行了一个空的函数，也会让页面卡顿。
+    因为浏览器不知道监听器到底会不会阻止默认事件，所以浏览器要等到执行完整个函数后，才能决定是否要滚动页面。
+    passive事件监听器，允许开发者告诉浏览器，监听器不会阻止默认行为，从而浏览器可以放心大胆的滚动页面，
+    这样可以大幅度提升移动端页面的性能，因为据统计只有20%的触摸事件会阻止默认事件-->
+
+    <!-- 设置 addEventListener 中的 passive 选项-->
+    <!-- 能够提升移动端的性能-->
+    <!-- 告知浏览器是否 关闭/触发 元素的默认事件-->
+
+
+    <div @click.passive="alert('div')">
+
+        <!-- event.once: 事件只触发一次 ( vue2.1.4+ )-->
+
+        event.passive:
+        <button @click="alert('button')">click</button>
+
+    </div>
+
+
+    <hr>
+
+
+    <h3>KeyboardEvent Modifier</h3>
+
+
+    @KeyboardEvent.key
+    <input type="text" @keyup.enter="onSubmit">
+
+
+    <hr>
+
+
+    <h3>SystemEvent Modifier</h3>
+
+
+    <input @keyup.alt.67="clear">
+
+    <input @keyup.alt.67="clear">
+
+
+    <!-- 即使 Alt 或 Shift 被一同按下时也会触发 -->
+    <button @click.ctrl="onClick">A</button>
+
+    <!-- 有且只有 Ctrl 被按下的时候才触发 -->
+    <button @click.ctrl.exact="onCtrlClick">A</button>
+
+    <!-- 没有任何系统修饰符被按下的时候才触发 -->
+    <button @click.exact="onClick">A</button>
+
+
+    <hr>
+
+
+    <h3>MouseEvent Modifier</h3>
+
+
+    <div @click.left="mouseUp">click</div>
+    <div @click.right="mouseUp">click</div>
+    <div @click.middle="mouseUp">click</div>
+
+
+</div>
+
+
+<!-------------------------------------------------------------------------------------------------------------------->
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {},
+    methods: {
+
+        alert(str) {
+
+            alert(str);
+        },
+
+        onSubmit() {
+
+            console.log('a');
+        },
+
+        handleClick(){
+
+
+        },
+
+        mouseUp(e) {
+
+            console.log('test');
+
+            console.log(e);
+        }
+    }
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 事件修饰符
+ *
+ *
+ * 1) 使用修饰符时，顺序很重要。相应的代码会以同样的顺序产生
+ *
+ *    v-on:click.prevent.self       // 会阻止所有的点击的默认事件
+ *    v-on:click.self.prevent       // 只会阻止对元素自身点击的默认事件
+ *
+ *
+ * 2) 不要把 .passive 和 .prevent 一起使用，因为 .prevent 将会被忽略，同时浏览器可能会向你展示一个警告。
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 按键修饰符
+ *
+ *
+ *
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * @mouseEvent.key = Fn                         // key 必须是短横线分隔，小驼峰命名无法识别
+ *
+ *
+ * keyCode 的事件用法已经被废弃了，并可能不会被最新的浏览器支持
+ *
+ *
+ * Vue.config.keyCodes.key = val                // 自定义按键别名
+ *
+ *
+ */
+
+
+// 为了在必要的情况下支持旧浏览器，Vue 提供了绝大多数常用的按键码的别名
+//
+// .enter
+// .tab
+// .delete
+// .esc
+// .space
+// .up
+// .down
+// .left
+// .right
+
+
+Vue.config.keyCodes = {
+
+    v: 86,
+    f1: 112,
+
+    // 小驼峰 不可用
+    mediaPlayPause: 179,
+
+    // 取而代之的是 短横线分隔 且用双引号括起来
+    "media-play-pause": 179,
+
+    up: [38, 87]
+};
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 系统修饰键
+ *
+ *
+ * 可以用如下修饰符来实现仅在按下相应按键时才触发鼠标或键盘事件的监听器
+ * 修饰键与常规按键不同，在和 keyup 事件一起用时，事件触发时修饰键必须处于按下状态
+ * 换句话说，只有在按住 ctrl 的情况下释放其它按键，才能触发 keyup.ctrl
+ * 而单单释放 ctrl 也不会触发事件。如果你想要这样的行为，请为 ctrl 换用 keyCode：keyup.17
+ */
+
+
+//
+//
+// .ctrl
+// .alt
+// .shift
+// .meta
+
+
+/**
+ * exact            // vue 2.5.0+
+ *
+ *
+ * 允许你控制由精确的系统修饰符组合触发的事件
+ */
+
+
+<!-- 即使 Alt 或 Shift 被一同按下时也会触发 -->
+// <button @click.ctrl="onClick">A</button>
+
+<!-- 有且只有 Ctrl 被按下的时候才触发 -->
+// <button @click.ctrl.exact="onCtrlClick">A</button>
+
+<!-- 没有任何系统修饰符被按下的时候才触发 -->
+// <button @click.exact="onClick">A</button>
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 鼠标按钮修饰符              // vue 2.2.0+
+ *
+ *
+ * .left
+ *
+ * .right
+ *
+ * .middle
+ */
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>

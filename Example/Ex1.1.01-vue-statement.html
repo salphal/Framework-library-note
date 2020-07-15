@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+
+
+<div id="vue-module">
+
+    <!-- variable: number, string, boolean, object, undefined, null -->
+
+    {{ msg }}                                   <!-- variable -->
+
+    {{ 'number: ' + 5201314 }}                  <!-- number -->
+    {{ 'string' }}                              <!-- string -->
+    {{ true }}                                  <!-- boolean -->
+    {{ ['a','b','c'] }}                         <!-- array -->
+    {{ {name:'alpha',age:18} }}                 <!-- object -->
+
+
+    <!-- basic express -->
+
+    {{ 1 + 1 }}
+    {{ !0 }}
+    {{ 1 + 1 === 2 ? 'do it' : 'just' }}
+
+
+</div>
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/**
+ * new Vue(options?: obj): fn;
+ *
+ *
+ * 返回一个 vue 实例对象
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+// vueModule - usage 1
+
+const vueModule1 = new Vue({
+
+    /**
+     * el: element | selector;
+     *
+     *
+     * 用于设置 vue-module 控制的区域
+     */
+
+    el: '#vue-module',
+
+    /**
+     * data: obj;
+     *
+     *
+     * 用于存放需要用的数据( 响应式数据 )
+     */
+
+    data: {
+        msg: 'hello world'
+    }
+});
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+// vueModule - usage 2
+
+// const vueModule2 = new Vue();
+//
+// /**
+//  * $mount(dom)               //  作用和 el 一致，用于配置指定的控制元素
+//  *
+//  *
+//  * 在项目中有时要进行延迟挂载使用
+//  */
+//
+// vueModule2.$mount(#vue-module);
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * data
+ *
+ *
+ * 用于存放需要用到的数据( 数据为响应式 )
+ */
+
+
+// const vm = new Vue({
+//
+//     el: '#app',
+//     data: {
+//
+//         'alpha': 'just do it'
+//     }
+// });
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * {{ content: variable | express }}                    // 插值表达式
+ *
+ *
+ * variable: 除了在data 中声明的变量( 无法使用在 data 中 未声明的变量 )
+ *           还可以直接填入 number, string, boolean, object, undefined, null
+ *
+ * express: 运算表达式
+ *          逻辑表达式
+ *          三元表达式
+ *          函数表达式
+ */
+
+
+// <!-- variable: number, string, boolean, object, undefined, null -->
+//
+// {{ msg }}                                   <!-- variable -->
+//
+// {{ 'number: ' + 5201314 }}                  <!-- number -->
+// {{ 'string' }}                              <!-- string -->
+// {{ true }}                                  <!-- boolean -->
+// {{ ['a','b','c'] }}                         <!-- array -->
+// {{ {name:'alpha',age:18} }}                 <!-- object -->
+
+
+// <!-- basic express -->
+//
+// {{ 1 + 1 }}
+// {{ !0 }}
+// {{ 1 + 1 === 2 ? 'do it' : 'just' }}
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 下列情况无法重新渲染数据
+ *
+ *
+ *
+ * 1) 未经声明的: 未在 js 中声明的属性，无法通过 数据劫持 所监听
+ *
+ * 2) 未经使用的: 渲染DOM( 为了降低消耗性能，在 js 中未使用的 DOM 不做监听 )
+ *
+ */
+
+/**
+ *
+ * 3) 数组: 通过索引更改数组的子项
+ *         更改数组的长度
+ *
+ *         resolve: push(), pop(), shift(), unshift(), splice(), sort(), reverse()
+ *
+ *
+ * vm.$set(tar: dom, key: str, val: str);
+ * Vue.set(tar, key, val);
+ *
+ * vm.$delete(tar: dom, key: str, val: str);
+ * Vue.delete(tar, key, val);
+ */
+
+/**
+ * 4) 对象: 增加对象的子项
+ *         删除对象的子项
+ *
+ *
+ * vm.$set(tar: dom, key: str, val: str);
+ * Vue.set(tar, key, val);
+ *
+ * vm.$delete(tar: dom, key: str, val: str);
+ * Vue.delete(tar, key, val);
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 未声明数据不报错？
+ *
+ *
+ * 在作用域上找不到时: 报错
+ *
+ * 在原型链上找不到时: undefined
+ */
+
+
+// <div id="app">
+//
+// {{ alpha.wife }}                 // 此时，不报错，在原链上可以找到 alpha，但是无法找到 alpha.wife = undefined
+//                                  // 因 undefined 为 js 基础类型的值，所以不报错
+//
+// </div>
+
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+
+        alpha: {
+            name: 'alpha',
+            age: 18,
+            height: '183cm'
+        }
+    }
+});
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>

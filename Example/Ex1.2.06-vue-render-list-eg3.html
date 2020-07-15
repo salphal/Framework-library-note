@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+
+
+<!--================================================================================================================-->
+
+
+<div id="app">
+    <button @click="show = !show">{{ show ? 'show' : 'hide' }}</button>
+
+    <label>
+        <input type="text" v-if="show" key="a">
+        <input type="text" v-else key="b">
+    </label>
+
+</div>
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+        persons: [
+            {name: 'Person-1', age: 16},
+            {name: 'Person-2', age: 17},
+            {name: 'Person-3', age: 18},
+            {name: 'Person-4', age: 18}
+        ],
+        alpha: {
+            name: 'Alpha',
+            age: 18,
+            height: '182cm',
+        },
+        show: true
+    },
+    methods: {
+        handleClick() {
+            this.persons.reverse();
+        }
+    }
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * :key vs key
+ *
+ *
+ * v-bind:key = val
+ *
+ * key = val
+ */
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>
