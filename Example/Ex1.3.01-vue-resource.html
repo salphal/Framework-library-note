@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+
+    <style>
+
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    #app {
+        position: relative;
+        width: 284px;
+        margin: 50px auto;
+    }
+
+    .username,
+    .mail {
+        width: 284px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .username input,
+    .mail input {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        padding: 10px 8px;
+        border: none;
+        outline: none;
+    }
+
+    .upload-btn,
+    .show-btn,
+    .test-btn {
+        width: 284px;
+        height: 40px;
+        margin-bottom: 10px;
+        line-height: 40px;
+        color: #fff;
+        background-color: #3f89ec;
+        border-radius: 3px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .person-list {
+        width: 284px;
+        border: 1px solid #ddd;
+        border-bottom: none;
+    }
+
+    .person {
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+        font-size: 12px;
+    }
+
+    .person span:first-of-type {
+        padding-right: 8px;
+        border-right: 1px solid #ddd;
+    }
+
+    .person span:last-of-type {
+        padding-left: 8px;
+    }
+
+    </style>
+
+</head>
+<body>
+
+
+<!--================================================================================================================-->
+
+
+<div id="app">
+    <div class="username">
+        <input type="text" placeholder="用户名" v-model="name">
+    </div>
+    <div class="mail">
+        <input type="text" placeholder="邮箱" v-model="mail">
+    </div>
+    <div class="upload-btn" @click="handleUpload">上传</div>
+    <div class="test-btn" @click="handleText">测试 jsonp</div>
+    <div class="show-btn" @click="handleShow">显示信息</div>
+    <ul class="person-list"
+        v-if="personList.length"
+    >
+        <li class="person"
+            v-for="person in personList"
+        >
+            <span>{{ person.name }}</span>
+            <span>{{ person.mail }}</span>
+        </li>
+    </ul>
+
+</div>
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+        msg: '',
+        name: '',
+        mail: '',
+        personList: []
+
+    },
+
+    methods: {
+
+        handleUpload() {
+
+            this.$http.post('https://developer.duyiedu.com/vue/setUserInfo', {
+
+                name: this.name,
+                mail: this.mail
+
+            }).then(res => {
+
+                this.msg = res.body.msg;
+
+            }).catch(err => {
+
+                this.msg = err.body.msg
+            });
+        },
+
+        handleShow() {
+
+            this.$http.get('https://developer.duyiedu.com/vue/getUserInfo').then(res => {
+
+                this.personList = res.body.data;
+
+            }).catch(err => {
+
+                console.log(err);
+            });
+        },
+
+        handleText() {
+
+            this.$http.jsonp('https://developer.duyiedu.com/vue/jsonp', {
+
+                jsonp: 'callback'
+
+            }).then(res => {
+
+                console.log(res);
+            });
+        }
+    },
+
+    computed: {},
+
+    watch: {
+
+        msg() {
+
+            if (this.msg === '') {
+
+                return;
+            }
+
+            alert(this.msg);
+
+            this.msg = '';
+        }
+    }
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * vue-resource             // resource 依赖 vue，必须先引入 vue
+ *
+ *
+ * 在Vue中实现异步加载需要使用到vue-resource 库，利用该库发送ajax
+ */
+
+
+// <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"><\/script>
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * vm.$http
+ *
+ *
+ * vue-resource使用了promise，所以$http中的方法的返回值是一个promise
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * vm.$http.post(url: str, ?data: obj, ?options: obj): promise;
+ *
+ *
+ * @url: 请求的目标地址
+ *
+ * @data: 作为请求体发送的数据
+ *
+ * @options: 作为请求体发送的数据
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * vm.$http.get(url, ?options): promise;
+ *
+ *
+ * @url: 请求的目标地址
+ *
+ * @options: 作为请求体发送的数据
+ */
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>
