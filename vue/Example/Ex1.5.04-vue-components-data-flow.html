@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+    <style>
+
+
+    </style>
+
+</head>
+<body>
+
+
+<!--================================================================================================================-->
+
+
+<div id="app">
+
+    <div>father: {{ count }}</div>
+
+    <button @click="count++">click -> father-count++ & son-count++</button>
+
+    <hr>
+
+    <my-count
+            :count="count"
+    >
+    </my-count>
+
+    <br>
+    <hr>
+    <br>
+
+
+    <div>此时绑定的是数据的引用地址</div>
+
+    <br>
+
+    <div>fatherArray: {{ array1 }}</div>
+
+    <button @click="array1.push(4)">click -> fatherArray.push(4) & sonArray.push(4)</button>
+
+    <hr>
+
+    <my-count-1
+            :array="array1"
+    >
+    </my-count-1>
+
+
+    <br>
+    <hr>
+    <br>
+
+
+    <div>father: {{ count }}</div>
+
+    <button @click="count++">click -> father-count++ & son-count++</button>
+
+    <hr>
+
+    <my-count-2
+            :count="count"
+    >
+    </my-count-2>
+
+
+    <br>
+    <hr>
+    <br>
+
+
+
+    <my-count-3
+            :size="str"
+    >
+    </my-count-3>
+
+
+    <hr>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+</div>
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Vue.component('my-count', {
+
+    props: {
+        count: Number
+    },
+    template: `
+    <div class="wrap">
+        <div>son: {{ count }}</div>
+        <button @click="count++">click -> son-count++</button>
+    </div>
+    `
+});
+
+
+Vue.component('my-count-1', {
+
+    props: {
+        array: Array
+    },
+    template: `
+    <div>
+        <div>sonArray: {{ array }}</div>
+        <button @click="array.push(4)">click -> fatherArray.push(4) & sonArray.push(4)</button>
+    </div>
+    `
+});
+
+
+Vue.component('my-count-2', {
+
+    props: {
+
+        count: Number
+    },
+    data() {
+
+        return {
+
+            myCount: this.count
+        }
+    },
+    template: `
+    <div>
+        <div>myCount: {{ myCount }}</div>
+        <button @click="myCount++">click -> son-count++</button>
+    </div>
+    `
+});
+
+
+
+Vue.component('my-count-3', {
+
+    props: ['size'],
+    computed: {
+
+        normalizedSize: function () {
+
+            return this.size.trim().toLowerCase()
+        }
+    },
+    template: `
+    <div>
+        <div>normalizedSize: {{ normalizedSize }}</div>
+    </div>
+    `
+});
+
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+        msg: 'hello world',
+        count: 0,
+        array1: [1, 2, 3],
+        array2: [2, 3, 4],
+        str: '    h   E llo  Wor  L d    '
+    },
+    methods: {},
+    computed: {},
+    watch: {},
+    created() {
+
+    },
+    beforeDestroy() {
+
+    },
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 单向数据流            // 所有的 prop 都使得其父子 prop 之间形成了一个单向下行绑定
+ *
+ *
+ * 父级 prop 的更新会向下流动到子组件中，但是反之则不行
+ * 防止从子组件意外改变父级组件的状态，从而导致你的应用的数据流向难以理解
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 子组件需要数据进行单独使用
+ *
+ *
+ * 将该值定义为本地 data，并将该 prop 用作其初始值
+ */
+
+// props: ['initialCounter'],
+//     data: function () {
+//     return {
+//         counter: this.initialCounter
+//     }
+// }
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ *  prop 以一种原始的值传入且需要进行转换
+ *
+ *
+ * 该情况下，最好使用这个 prop 的值来定义一个计算属性
+ */
+
+// props: ['size'],
+//     computed: {
+//     normalizedSize: function () {
+//         return this.size.trim().toLowerCase()
+//     }
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>

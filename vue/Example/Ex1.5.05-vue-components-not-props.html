@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+    <style>
+
+
+
+    </style>
+
+</head>
+<body>
+
+
+<!--================================================================================================================-->
+
+
+<div id="app">
+
+
+    <!-- 非 prop 特性会 替换 / 合并( class, style ) 已有特性 -->
+    <!-- prop: 特性会作为数据传入组件 -->
+    <!-- not-prop: 非特性会直接添加到组件的根元素上 -->
+    <!-- class&style: class&style 特性会和组件的相同特性合并 -->
+
+    <my-cmp-1  prop="this-is-prop" not-prop="this-is-not-prop" class="addClass">
+    </my-cmp-1>
+
+
+    <hr>
+
+
+    <!-- 利用 inheritAttrs: false, 禁用特性继承 -->
+    <!-- 再利用 v-bind="$attrs" 特性用于指定元素上 -->
+    <my-cmp-2 type="radio">
+
+    </my-cmp-2>
+
+</div>
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// 合并/替换已有特性
+Vue.component('my-cmp-1', {
+
+    props: ['prop'],
+    template: `
+    <div class="my-cmp"></div>
+    `
+});
+
+
+// 禁用特性继承
+Vue.component('my-cmp-2', {
+
+    props: ['prop'],
+    inheritAttrs: false,
+    mounted() {
+
+        console.log(this.$attrs);
+    },
+    template: `
+    <label>
+        select:
+        <input v-bind="$attrs"/>
+    </label>
+    `
+});
+
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+        msg: 'hello world',
+
+    },
+    methods: {
+
+    },
+    computed: {
+
+    },
+    watch: {
+
+    },
+    created() {
+
+    },
+    beforeDestroy() {
+
+    },
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * not-prop
+ *
+ *
+ * 非Prop特性指的是，一个未被组件注册的特性。当组件接收了一个非Prop特性时，该特性会被添加到这个组件的根元素上
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 非 prop 特性会 替换 / 合并( class, style ) 已有特性
+ *
+ *
+ * prop: 特性会作为数据传入组件
+ * not-prop: 非特性会直接添加到组件的根元素上
+ * class&style: class&style 特性会和组件的相同特性合并
+ */
+
+
+// <my-cmp-1  prop="this is prop" not-prop="this is not-prop" class="addClass"></my-cmp-1>
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 禁用特性继承
+ *
+ *
+ * 利用 inheritAttrs: false, 禁用特性继承
+ * 再利用 v-bind="$attrs" 特性用于指定元素上
+ */
+
+
+// Vue.component('my-cmp-2', {
+//
+//     props: ['prop'],
+//     inheritAttrs: false,
+//     mounted() {
+//
+//         console.log(this.$attrs);
+//     },
+//     template: `
+//     <label>
+//         select:
+//         <input v-bind="$attrs"/>
+//     </label>
+//     `
+// });
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+
+
+
+</body>
+</html>

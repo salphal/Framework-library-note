@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="../lib/axios.min.js"></script>
+
+    <style>
+
+    .video-item {
+        float: left;
+        width: 50%;
+    }
+
+    .video-item .poster {
+        position: relative;
+        height: 106px;
+        margin-right: 6px;
+        margin-left: 6px;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .video-item .poster img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .video-item .poster .info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 20px;
+        padding-top: 7px;
+        padding-bottom: 3px;
+        padding-left: 10px;
+        color: #fff;
+        font-size: 12px;
+        background-image: linear-gradient(rgba(33, 33, 33, 0), rgba(33, 33, 33, .5));
+    }
+
+    .video-item .info div {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 10px;
+    }
+
+    .video-item .info svg {
+        margin-right: 3px;
+        width: 14px;
+        height: 14px;
+        fill: #fff;
+    }
+
+    .video-item .title {
+        margin: 6px 6px 10px 6px;
+        height: 38px;
+        line-height: 20px;
+        font-size: 13px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+
+    </style>
+
+
+</head>
+<body>
+
+
+<!--================================================================================================================-->
+
+
+<div id="app">
+
+    <!--    <video-item
+                v-for="video in videoList"
+                :poster="video.poster"
+                :play="video.play"
+                :rank="video.rank"
+                :title="video.title"
+        >
+        </video-item>-->
+
+    <video-list
+            :video-list="videoList"
+    >
+    </video-list>
+
+</div>
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Vue.component('video-list', {
+//
+//     props: ['videoList'],
+//     template: `
+//     <div class="video-list">
+//         <video-item
+//                 v-for="video in videoList"
+//                 :poster="video.poster"
+//                 :play="video.play"
+//                 :rank="video.rank"
+//                 :title="video.title"
+//         >
+//         </video-item>
+//     </div>`
+// });
+
+Vue.component('video-list', {
+
+    props: ['videoList'],
+    template: `
+    <div class="video-list">
+        <video-item
+                v-for="video in videoList"
+                v-bind="video"
+        >
+        </video-item>
+    </div>`
+});
+
+Vue.component('video-item', {
+
+    props: ['poster', 'play', 'rank', 'title'],
+    template: `
+    <div class="video-item">
+        <div class="poster">
+            <img :src="poster" alt="">
+            <div class="info">
+                <div class="play">{{ rank }}</div>
+                <div class="rank">{{ rank }}</div>
+            </div>
+        </div>
+        <div class="title">{{ title }}</div>
+    </div>`
+
+});
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+        msg: 'hello world',
+        videoList: [],
+
+    },
+    methods: {},
+    computed: {},
+    watch: {},
+    created() {
+
+        axios.get('https://developer.duyiedu.com/vue/bz/video', {
+
+            params: {
+                start: 0,
+                offset: 12
+            }
+
+        }).then(res => {
+
+            this.videoList = res.data.data;
+        });
+    },
+    beforeDestroy() {
+
+    }
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * component._prop
+ *
+ *
+ * 组件默认只是写好结构、样式和行为，使用的数据应由外界传递给组件
+ */
+
+
+// <div id="app">
+//
+//      <demo
+//          prop-src="propSrc"
+//          prop1="value1"
+//          prop2="value2"
+//          prop3="value3"
+//      >
+//      </demo>
+//
+// </div>
+
+
+Vue.component('demo', {
+
+    prop: ['prop1', 'prop2', 'prop3', 'propSrc'],
+
+    component: `
+    <div class="wrap">
+    <img :src="propSrc" alt="">
+        <div>{{ prop 1}}</div>
+        <div>{{ prop 2}}</div>
+        <div>{{ prop 3}}</div>
+    </div>`
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * prop 大小写
+ *
+ *
+ * HTML 中的特性名是大小写不敏感的，所以浏览器会把所有大写字符解释为小写字符
+ * 当 传递的 prop 为 短横线分隔命名时，组件内 的 props 应为 驼峰命名
+ */
+
+
+// <div id="app">
+// <!-- 在 HTML 中是 kebab-case 的 -->
+// <video-item sub-title="hello!"></video-item>
+// </div>
+
+
+// Vue.component('video-item', {
+// // 在 JavaScript 中是 camelCase 的
+// props: ['subTitle'],
+// template: '<h3>{{ postTitle }}</h3>'
+// })
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 传递 prop( 静态或动态 )
+ *
+ *
+ * 传递静态 prop
+ *
+ * <demo-item title="羊村摇"></demo-item>
+ *
+ *
+ * 传递动态 prop            // 使用 v-bind 指令进行传递
+ *
+ * <demo-item :title="title"></demo-item>
+ *
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 传递一个对象的所有属性
+ *
+ *
+ * 将一个对象的所有属性都作为 prop 传入，你可以使用不带参数的 v-bind
+ */
+
+
+// demo: {
+//     name: 'shanshan',
+//     age: 18,
+// }
+
+
+// <demo-component v-bind="demo"></demo-component>      // 绑定该对象的所有数据属性
+
+
+// 上述代码等价于:
+//
+// <my-component
+//     :name="person.name"
+//     :age="person.age"
+// ></my-component>
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

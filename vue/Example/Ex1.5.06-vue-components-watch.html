@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+    <style>
+
+
+    </style>
+
+</head>
+<body>
+
+
+<!--================================================================================================================-->
+
+
+<div id="app">
+
+    <div :style="{fontSize: postFontSize + 'em'}">
+        <blog-post
+                v-for="post in posts"
+                :post="post"
+                :key="post.id"
+                @enlarge-text="postFontSize += $event"
+        >
+        </blog-post>
+    </div>
+
+
+    <hr>
+
+
+    <base-input @focus.native="onFocus" @blur.native="onBlur"></base-input>
+
+
+    <hr>
+
+
+    <base-input-1 @focus="onFocus" @blur="onBlur"></base-input-1>
+
+
+    <hr>
+
+
+    <base-input-2
+            :value="name"
+            @input="name = $event"
+    >
+    </base-input-2>
+
+
+    <hr>
+
+
+    <base-input-3
+            :value="name"
+            v-model="name"
+    >
+    </base-input-3>
+
+
+    <hr>
+
+    <base-checkbox
+            :checked="checked"
+            @change="checked = $event"
+    >
+    </base-checkbox>
+
+
+    <hr>
+
+
+<!--    <base-input-4
+            :value="name" @update:input="name = $event"
+    >
+    </base-input-4>-->
+
+
+    <base-input-4
+            :value.sync="name"
+    >
+    </base-input-4>
+
+
+</div>
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Vue.component('blog-post', {
+
+    props: {
+        post: Object
+    },
+    template: `
+    <div>
+        <h3>{{ post.title }}</h3>
+        <button @click="$emit('enlarge-text', 0.2)">放大字号</button>
+        <div>{{ post.content }}</div>
+    </div>
+    `
+});
+
+
+Vue.component('base-input', {
+
+    template: `
+    <input type="text"/>
+    `
+});
+
+
+Vue.component('base-input', {
+
+    template: `
+    <input type="text"/>
+    `
+});
+
+
+Vue.component('base-input-1', {
+
+    mounted() {
+
+        console.log(this.$listeners);
+        //
+        // {focus: ƒ, blur: ƒ}
+    },
+    template: `
+    <label>
+        name:
+        <input type="text" v-on="$listeners"/>
+    </label>
+    `
+});
+
+
+Vue.component('base-input-2', {
+
+    props: ['value'],
+    template: `
+    <label>
+        name:
+        <input type="text" :value="value" @input="$emit('input', $event.target.value)">
+    </label>
+    `
+});
+
+
+Vue.component('base-input-3', {
+
+    props: ['value'],
+    module: {
+        prop: 'checked',        // 指定默认绑定的特性
+        event: 'change',        // 指定监听的事件
+    },
+    template: `
+    <label>
+        name:
+        <input type="text" :value="value" @input="$emit('input', $event.target.value)">
+    </label>
+    `
+});
+
+
+Vue.component('base-checkbox', {
+
+    props: {
+        checked: Boolean,
+    },
+    module: {
+        prop: 'checked',        // 指定默认绑定的特性
+        event: 'change',        // 指定监听的事件
+    },
+    template: `
+    <input
+        type="checkbox"
+        :checked="checked"
+        @change="$emit('change', $event.target.checked)"
+    />
+    `
+});
+
+
+Vue.component('base-input-4', {
+
+    props: ['value'],
+    template: `
+    <input
+        type="text"
+        :value="value"
+        @input="$emit('update:value', $event.target.value)"
+    />
+    `
+});
+
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+        msg: 'hello world',
+        postFontSize: 1,
+        posts: [
+            {title: 'heading-0', content: 'hello world', id: 0},
+            {title: 'heading-1', content: 'hello world', id: 1},
+            {title: 'heading-2', content: 'hello world', id: 2},
+            {title: 'heading-3', content: 'hello world', id: 3},
+            {title: 'heading-4', content: 'hello world', id: 4},
+            {title: 'heading-5', content: 'hello world', id: 5}
+        ],
+        name: 'alpha',
+        checked: true,
+    },
+    methods: {
+
+        onEnlargeText(enlargeAmount) {
+
+            /**
+             * 组件中监听事件没有事件参数 event
+             *
+             * 传入参数可被 $event 代替
+             */
+
+            this.postFontSize += enlargeAmount;
+        },
+        onFocus() {
+
+            console.log('focus');
+        },
+        onBlur() {
+
+            console.log('blur');
+        }
+    },
+    computed: {},
+    watch: {},
+    created() {
+
+    },
+    beforeDestroy() {
+
+    },
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * $emit(eventName: str, params);
+ *
+ *
+ * @eventName: 监听的事件名
+ *
+ * @params: 抛出的参数
+ *
+ *
+ * 在组件内使用该函数监听指定事件
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * event-name
+ *
+ *
+ * 不同于组件和prop，事件名不存在任何自动化的大小写转换
+ * 而是触发的事件名需要完全匹配监听这个事件所有的名称
+ */
+
+
+// 触发一个camelCase名字的事件
+//
+// this.$emit('myEvent')
+
+
+// 监听这个名字的kabab-case版本是不会有任何效果的
+//
+// <!-- 没有效果 -->
+// <my-component v-on:my-event="doSomething"></my-component>
+
+
+/**
+ * 与组件和prop不同的是，事件名不会被当作一个 JS 变量名或者属性名，所以就没有理由使用camelCase 或 PascalCase 了
+ *
+ * v-on 事件监听器在 DOM 模板中会被自动转换为全小写，所以 @myEvent 将会变成 @myevent，导致 myEvent 不可能被监听到
+ *
+ *
+ * 推荐始终使用 kebab-case 的事件名
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/** 将原生事件绑定到组件 **/
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 使用 .native 修饰符监听组件根元素的原生事件
+ *
+ *
+ * 弊端: 若监听嵌套元素( eg: label>input ), 则父级 .native 监听器将静默失败
+ */
+
+
+// <base-input @focus.native="onFocus" @blur.native="onBlur"></base-input>
+//
+// Vue.component('base-input', {
+//     template: `
+//     <input type="text" />
+//   `
+// })
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 利用 $listeners 属性将所有的事件监听器指向组件中某个特定的子元素
+ *
+ *
+ *
+ */
+
+
+// {
+//     focus: function (event) { /* ... */ }
+//     blur: function (event) { /* ... */ },
+// }
+
+
+// Vue.component('base-input', {
+//     template: `
+//     <label>
+//       名字：
+//       <input v-on="$listeners" />
+//     </label>
+//   `
+// });
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/** v-module **/
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+// <input v-model="searchText" />
+//
+// 等价于
+//
+// <input
+//     :value="searchText"
+//     @input="searchText = $event.target.value"
+// />
+
+
+// <base-input v-model="searchText" />
+//
+// 则等价于：
+//
+// <base-input
+//     :value="searchText"
+//     @input="searchText = $event"
+// />
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * component.module {
+ *
+ *     prop: '',            // 指定默认绑定的特性
+ *     event: '',           // 指定监听的事件
+ * }
+ *
+ *
+ * 该属性可避免特性重名冲突
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * .async === :prop @update:prop
+ *
+ *
+ * 带有.sync修饰符的v-bind指令，只能提供想要绑定的属性名，不能和表达式一起使用
+ * 如：:title.sync="1+1"，这样操作是无效的
+ *
+ * 将 v-bind.sync 用在 一个字面量对象上，如 v-bind.sync="{ title: 'haha' }"，是无法工作的，
+ * 因为在解析一个像这样的复杂表达式的时候，有很多边缘情况需要考虑
+ */
+
+
+// <base-input-4
+//      :value="name" @update:input="name = $event"
+// >
+// </base-input-4>
+//
+//
+// <base-input-4
+//      :value.sync="name"
+// >
+// </base-input-4>
+
+// Vue.component('base-input-4', {
+//
+//     props: ['value'],
+//     template: `
+//     <input
+//         type="text"
+//         :value="value"
+//         @input="$emit('update:value', $event.target.value)"
+//     />
+//     `
+// });
+
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * v-module vs .sync
+ *
+ *
+ * 在 vue 1.x 时，就已经支持 .sync 语法，但是此时的 .sync 可以完全在子组件中修改父组件的状态，
+ * 造成整个状态的变换很难追溯，所以官方在2.0时移除了这个特性
+ * vue2.3时，.sync又回归了，跟以往不同的是，现在的.sync完完全全就是一个语法糖的作用，
+ * 跟v-model的实现原理是一样的，也不容易破环院有的数据模型，所以使用上更安全也更方便
+ *
+ *
+ *
+ * 1) 两者都是用于实现双向数据传递的，实现方式都是语法糖，最终通过 prop + 事件 来达成目的
+ *
+ * 2) vue 1.x 的 .sync 和 v-model 是完全两个东西，vue 2.3 之后可以理解为一类特性，使用场景略微有区别
+ *
+ * 3) 当一个组件对外只暴露一个受控的状态，切都符合统一标准的时候，我们会使用v-model来处理
+ *    .sync则更为灵活，凡是需要双向数据传递时，都可以去使用
+ */
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>
+
+
+G
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
