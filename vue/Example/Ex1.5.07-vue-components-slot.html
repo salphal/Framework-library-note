@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,7 +8,6 @@
 
 
     <style>
-
 
 
     </style>
@@ -22,34 +21,229 @@
 
 <div id="app">
 
+    <my-cmp>
+        hello world
+
+        <hr>
+
+        {{ msg }}
+
+    </my-cmp>
+
+
+    <hr>
+
+
+    <my-button></my-button>
+
+
+    <hr>
+
+
+    <my-cmp-1>
+
+        <template v-slot:header>
+            <div>H</div>
+        </template>
+
+        <template v-slot:main>
+            <div>M</div>
+        </template>
+
+        <template v-slot:footer>
+            <div>F</div>
+        </template>
+
+    </my-cmp-1>
+
+
+    <hr>
+
+
+<!--     <my-cmp-2>
+
+            <template v-slot:default="slotProps">
+                {{ slotProps.localUser }}
+            </template>
+
+    </my-cmp-2>-->
+
+
+    <my-cmp-2 v-slot="slotProps">
+
+            {{ slotProps.localUser }}
+
+    </my-cmp-2>
+
+
+    <hr>
+
+
+    <!-- 解构数据 -->
+    <my-cmp-3 v-slot="{ localUser }">
+
+        {{ localUser.name }}
+        {{ localUser.age }}
+
+    </my-cmp-3>
+
+
+    <hr>
+
+
+    <!-- 重命名解构数据 -->
+    <my-cmp-3 v-slot="{ localUser: alpha }">
+
+        {{ alpha.name }}
+        {{ alpha.age }}
+
+    </my-cmp-3>
+
+
+    <hr>
+
+
+    <!-- 设置解构默认值 -->
+    <my-cmp-3 v-slot="{ localUser= { name: 'beta', age: 17 } }">
+
+        {{ localUser.name }}
+        {{ localUser.age }}
+
+    </my-cmp-3>
+
+
+    <hr>
+
+
+    <my-cmp-4>
+
+        <template v-slot:[dynamicSlotName]/>
+
+    </my-cmp-4>
+
+
+
 </div>
 
 
 <!--================================================================================================================-->
 
 
-
-
 <script>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Vue.component('my-cmp', {
+
+    data() {
+
+        return {
+            msg: 'local-data'
+        }
+    },
+    template: `
+    <div>
+
+        ---just---
+        <slot/>
+    </div>
+    `
+});
+
+
+Vue.component('my-button', {
+
+    // html 中使用单标签时，可以将内容设置在组件的插槽中
+    template: `
+    <button>
+        <slot>Submit</slot>
+    </button>
+    `
+});
+
+
+Vue.component('my-cmp-1', {
+
+    template: `
+    <div class="container">
+        <header>
+            <slot name="header"/>
+        </header>
+        <main>
+            <slot name="main"/>
+        </main>
+        <footer>
+            <slot name="footer"/>
+        </footer>
+    </div>
+    `
+});
+
+
+Vue.component('my-cmp-2', {
+
+    data() {
+
+        return {
+
+            localUser: {
+                name: 'alpha',
+                age: 18
+            }
+        };
+    },
+    template: `
+    <span>
+      <slot v-bind:localUser="localUser"/>
+    </span>
+    `
+});
+
+
+Vue.component('my-cmp-3', {
+
+    data() {
+
+        return {
+
+            localUser: {
+                name: 'alpha',
+                age: 18
+            }
+        };
+    },
+    template: `
+    <span>
+      <slot v-bind:localUser="localUser"/>
+    </span>
+    `
+});
+
+
+let dynamicSlotName = 'omega';
+
+Vue.component(dynamicSlotName, {
+
+    template: `
+    <div>hello world</div>
+    `
+});
+
 
 
 const vm = new Vue({
 
     el: '#app',
     data: {
-        msg: 'hello world',
-
+        msg: 'global-data',
+        globalUser: {
+            name: 'beta',
+            age: 19
+        },
     },
-    methods: {
-
-    },
-    computed: {
-
-    },
-    watch: {
-
-    },
+    methods: {},
+    computed: {},
+    watch: {},
     created() {
 
     },
@@ -62,14 +256,348 @@ const vm = new Vue({
 //-------------------------------------------------------------------------------------------------------------------//
 
 
+/**
+ * component.slot
+ *
+ *
+ * 当组件渲染时，<slot></slot>将会被替换为“写在组件标签结构中的内容”
+ * 插槽内可以包含任何模板代码，包括HTML和其他组件
+ * 如果<my-cmp>没有包含<slot>元素，则该组件起始标签和结束标签之间的任何内容都会被抛弃
+ */
 
+
+// <my-cmp>
+//     写在组件标签结构中的内容
+// </my-cmp>
+
+
+Vue.component('my-cmp', {
+
+    template: `
+    <div>
+        <slot/>
+    </div>
+    `
+});
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 编译作用域
+ *
+ *
+ * 父级模板里的所有内容都是在父级作用域中编译的
+ *
+ * 子模板里的所有内容都是在子作用域中编译的
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 后备内容
+ *
+ *
+ * 当使用组件未提供插槽时，后备内容将会被渲染。如果提供插槽，则后备内容将会被取代
+ */
+
+
+// <div id="app">
+//
+//     <my-button/>
+//
+// </div>
+
+Vue.component('my-button', {
+
+
+    template: `
+    <button>
+        <slot>submit</slot>             // html 中使用单标签时，可以将内容设置在组件的插槽中
+    </button>
+    `
+});
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 具名插槽
+ *
+ *
+ * <slot name:default=""></slot>            // 默认具名插槽
+ * <slot ></slot>                           // 默认具名插槽
+ *
+ *
+ * * 任何未设置 name 的插槽内容会放置于 默认的具名插槽中
+ *
+ *
+ * v-slot只能添加在<template>上，只有一种例外情况
+ */
+
+// Vue.component('my-cmp', {
+// template: `
+//     <div class="container">
+//     <header>
+//             <!-- 页头 -->
+//         </header>
+//         <main>
+//             <!-- 主要内容 -->
+//         </main>
+//         <footer>
+//             <!-- 页脚 -->
+//         </footer>
+//         </div>
+//     `
+// });
+
+
+
+// Vue.component('my-cmp', {
+//
+//     template: `
+//     <div class="container">
+//         <header>
+//             <slot name="header"/>
+//         </header>
+//         <main>
+//             <slot name="main"/>
+//         </main>
+//         <footer>
+//             <slot name="footer"/>
+//         </footer>
+//     </div>
+//     `
+// });
+
+
+// <my-cmp-1>
+//
+//     <template v-slot:header>
+//         <div>H</div>
+//     </template>
+//
+//     <template v-slot:main>
+//         <div>M</div>
+//     </template>
+//
+//     <template v-slot:footer>
+//         <div>F</div>
+//     </template>
+//
+// </my-cmp-1>
+
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 具名插槽缩写               // v-slot => #
+ *
+ *
+ * 该缩写仅在其有参数时可用
+ *
+ * Vue 2.6.0+
+ */
+
+
+// <my-cmp-1>
+//
+//     <template #header>
+//         <div>H</div>
+//     </template>
+//
+//     <template #main>
+//         <div>M</div>
+//     </template>
+//
+//     <template #footer>
+//         <div>F</div>
+//     </template>
+//
+// </my-cmp-1>
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * slotProps            // 作用域插槽
+ *
+ *
+ * 因为 父级模板里的所有内容都是在父级作用域中编译的, 子模板里的所有内容都是在子作用域中编译的
+ *
+ * 若要使用子模版中的数据
+ *
+ */
+
+
+// 利用 slot 将数据于子元素的数据绑定
+//
+// <my-cmp-2>
+//
+//     <template v-slot:default="slotProps">
+//         {{ slotProps.localUser }}
+//     </template>
+//
+// </my-cmp-2>
+
+
+Vue.component('my-cmp-2', {
+
+    data() {
+
+        return {
+
+            localUser: {
+                name: 'alpha',
+                age: 18
+            }
+        };
+    },
+    template: `
+    <span>
+      <slot v-bind:localUser="localUser"/>
+    </span>
+    `
+});
+
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 独占默认插槽的缩写语法
+ *
+ *
+ * * 默认插槽的缩写语法不能和具名插槽混用，因为它会导致作用域不明确
+ */
+
+// 将子元素的数据绑定至默认插槽上( 简化了 template )
+//
+// <my-cmp-2 v-slot="slotProps">
+//
+//     {{ slotProps.localUser }}
+//
+// </my-cmp-2>
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 解构 slotProps             // ES 解构语法相同
+ *
+ *
+ *
+ */
+
+
+// <!-- 解构数据 -->
+//
+// <my-cmp-3 v-slot="{ localUser }">
+//
+//     {{ localUser.name }}
+//     {{ localUser.age }}
+//
+// </my-cmp-3>
+
+
+// <!-- 重命名解构数据 -->
+//
+// <my-cmp-3 v-slot="{ localUser: alpha }">
+//
+//     {{ alpha.name }}
+//     {{ alpha.age }}
+//
+// </my-cmp-3>
+
+
+// <!-- 设置解构默认值 -->
+//
+// <my-cmp-3 v-slot="{ localUser= { name: 'beta', age: 17 } }">
+//
+//     {{ localUser.name }}
+//     {{ localUser.age }}
+//
+// </my-cmp-3>
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 动态插槽名                // 变量插槽名
+ *
+ *
+ * Vue 2.6.0+
+ */
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/** 废弃语法 **/
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 带有slot特性的具名插槽
+ *
+ *
+ * 自 2.6.0 起被废弃
+ */
+
+// <my-cmp>
+//     <template slot="header">
+//         <h1>头部</h1>
+//     </template>
+//
+//     <template>
+//         <p>内容</p>
+//         <p>内容</p>
+//     </template>
+//
+//     <template slot="footer">
+//         <p>底部</p>
+//     </template>
+// </my-cmp>
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 带有slot-scope特性的作用域插槽
+ *
+ *
+ * 自 2.6.0 起被废弃
+ */
+
+
+// <my-cmp>
+//     <template slot="default" slot-scope="slotProps">
+//         {{ slotProps.user.name }}
+//     </template>
+// </my-cmp>
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 </script>
-
-
-
 
 
 </body>

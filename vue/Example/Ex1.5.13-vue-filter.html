@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+    <style>
+
+
+
+    </style>
+
+</head>
+<body>
+
+
+<!--================================================================================================================-->
+
+
+<div id="app">
+
+
+    {{ msg | globalFilterA | globalFilterB }}
+
+
+    <hr>
+
+
+    {{ test | capitalize }}
+
+
+    <hr>
+
+
+    {{ money | toMoney }}
+
+
+    <hr>
+
+
+    {{ word | addWord}}
+
+
+</div>
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Vue.filter('globalFilterA', (param)=> {                 // global filter
+
+    console.log( param);
+
+    return 'globalFilterA';
+});
+
+
+Vue.filter('globalFilterB', (param)=> {                 // global filter
+
+    console.log(param);
+
+    return 'globalFilterB';
+});
+
+
+Vue.filter('capitalize', param => {
+
+    if (!param) {
+        return;
+    }
+
+     return  param.charAt(0).toUpperCase() + param.slice(1);
+
+});
+
+
+Vue.filter('toMoney', money => {
+
+    return money.toLocaleString();
+});
+
+
+Vue.filter('addWord', data => {
+
+
+    if (!data){
+
+        return;
+    }
+
+    if (data > 10000) {
+
+        return (data / 10000).toFixed(1) + 'w';
+    }
+
+    return data;
+
+});
+
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+        msg: 'hello world',
+        test: 'just do it',
+        money: 1839175121301000,
+        word: 12153123,
+
+    },
+    filters: {                                      // local filter
+
+        localFilter(param) {
+
+            console.log(param);
+
+            return 'local-filter';
+        },
+    },
+    methods: {
+
+    },
+    computed: {
+
+    },
+    watch: {
+
+    },
+    created() {
+
+    },
+    beforeDestroy() {
+
+    },
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 过滤器仅可用于以下两个地方
+ *
+ *
+ * 1) 双花括号插值
+ *
+ * {{ data | filterName }}
+ *
+ *
+ * 2) v-bind 表达式
+ *
+ *
+ */
+
+
+<!-- 在双花括号中 -->
+// {{ message | filter }}
+
+<!-- 在 v-bind 中 -->
+// <div v-bind:id="id | filter"></div>
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 定义过滤器
+ *
+ *
+ * 1) global filter
+ *
+ * Vue.filter('filter', param => {});
+ *
+ *
+ * 2) local filter
+ *
+ * filters: {
+ *
+ *     filter(param) {
+ *
+ *         return 'local-filter'
+ *     }
+ * }
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * param
+ *
+ *
+ * 当过滤器形式为 msg | filter 时，filter 过滤器接收一个参数，参数为 msg
+ *
+ * 当过滤器形式为 msg | filter('a') 时，filter 过滤器接收两个参数，参数为 msg, 'a'
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 过滤器串联
+ *
+ *
+ * {{ msg | filterA | filterB }}
+ */
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+
+
+
+</body>
+</html>

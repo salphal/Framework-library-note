@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+    <style>
+
+
+    </style>
+
+</head>
+<body>
+
+
+<!--================================================================================================================-->
+
+
+<div id="app">
+
+    <grand-father>
+        <father>
+            <son>
+                <grand-son></grand-son>
+            </son>
+        </father>
+    </grand-father>
+
+</div>
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Vue.component('grand-father', {
+
+    provide() {
+
+        return {
+
+            grandFatherProvide: 'grand-father-provide'
+        };
+    },
+    data() {
+
+        return {
+
+            share: 'share'
+        }
+    },
+    template: `
+        <div class="grand-father">
+            <slot>grand-father</slot>
+        </div>
+    `
+});
+
+
+Vue.component('father', {
+
+    mounted() {
+
+        this.$root.name = 'beta';
+
+        console.log(this.$parent.share);                        // 'share'
+    },
+    template: `
+    <div class="father">
+        <slot>father</slot>
+    </div>
+    `
+});
+
+
+Vue.component('son', {
+
+    mounted() {
+
+        console.log(this.$parent.share);                        // undefined
+
+        console.log(this.$parent.$parent.share);                // 'share'
+    },
+    template: `
+    <div class="son">
+        <slot>son</slot>
+    </div>
+    `
+});
+
+
+Vue.component('grand-son', {
+
+    inject: ['grandFatherProvide'],
+    mounted() {
+
+        console.log(this.$root.name);
+
+        console.log(this.$parent.$parent.$parent.share);        // 'share'
+
+        console.log(this.grandFatherProvide);
+    },
+    template: `
+    <div class="grand-son">
+        <slot>grand-son</slot>
+    </div>
+    `
+});
+
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+        msg: 'hello world',
+        name: 'alpha'
+    },
+    methods: {},
+    computed: {},
+    watch: {},
+    created() {
+
+    },
+    beforeDestroy() {
+
+    },
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * $root
+ *
+ *
+ * 访问根实例
+ *
+ * this.$root.foo;                  // 获取根组件的数据
+ *
+ * this.$root.foo = 2;              // 写入根组件的数据
+ *
+ * this.$root.bar;                  // 访问根组件的计算属性
+ *
+ * this.$root.baz();                // 调用根组件的方法
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * $parent
+ *
+ *
+ * 访问 父组件实例, 可以替代将数据以prop的方式传入子组件的方式
+ *
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 依赖注入( provide & inject )
+ *
+ *
+ * 负面影响: 将你应用程序中的组件与它们当前的组织方式耦合起来，使重构变得更加困难
+ *          同时所提供的属性是非响应式的。
+ *          这是出于设计的考虑，因为使用它们来创建一个中心化规模化的数据跟使用 $root做这件事都是不够好的
+ *          如果你想要共享的这个属性是你的应用特有的，而不是通用化的，或者如果你想在祖先组件中更新所提供的数据，
+ *          那么这意味着你可能需要换用一个像 Vuex 这样真正的状态管理方案了
+ */
+
+
+/**
+ * 依赖注入 vs $parent
+ *
+ *
+ * 1) 祖先组件不需要知道哪些后代组件使用它提供的属性
+ *
+ * 2) 后代组件不需要知道被注入的属性来自哪里
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * provide
+ *
+ *
+ * 指定想要提供给后代组件的数据/方法
+ */
+
+Vue.component('grand-father', {
+
+    provide() {
+
+        return {
+
+            grandFatherProvide: 'grand-father-provide'
+        };
+    },
+    template: `
+        <div class="grand-father">
+            <slot>grand-father</slot>
+        </div>
+    `
+});
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * inject
+ *
+ *
+ * 任何后代组件中，使用 inject 选项接收指定想要添加在实例上的属性
+ */
+
+Vue.component('grand-son', {
+
+    inject: ['grandFatherProvide'],
+    mounted() {
+
+        console.log(this.grandFatherProvide);
+    },
+    template: `
+    <div class="grand-son">
+        <slot>grand-son</slot>
+    </div>
+    `
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * <demo ref="demo"/> => this.$refs
+ *
+ *
+ * ref 特性为子组件赋予一个ID引
+ *
+ * this.$refs 为所有有 ref 特性 的集合
+ *
+ *
+ *
+ * 当ref 和 v-for 一起使用时，得到的引用将会是一个包含了对应数据源的这些子组件的数组
+ *
+ * * $refs 只会在组件渲染完成之后生效，并且它们不是响应式的。应该避免在模板或计算属性中访问 $refs
+ */
+
+
+// <my-cmp ref="cmp"></my-cmp>
+
+// <input ref="input" />
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 程序化的事件侦听器
+ *
+ *
+ * $on(eventName, eventHandler);            // 侦听一个事件
+ *
+ * $on(eventName, eventHandler);            // 一次性侦听一个事件
+ *
+ * $off(eventName, eventHandler);           // 停止侦听一个事件
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 需要在这个组件实例中保存这个 picker，如果可以的话最好只有生命周期钩子可以访问到它。这并不算严重的问题，但是它可以被视为杂物。
+ *
+ *  我们的建立代码独立于我们的清理代码，这使得我们比较难于程序化地清理我们建立的所有东西
+ */
+
+
+Vue.component('my-cmp', {
+    // 一次性将这个日期选择器附加到一个输入框上
+    // 它会被挂载到 DOM 上。
+    mounted() {
+        // Pikaday 是一个第三方日期选择器的库
+        this.picker = new Pikaday({
+            field: this.$refs.input,
+            format: 'YYYY-MM-DD',
+        })
+    },
+    // 在组件被销毁之前，
+    // 也销毁这个日期选择器。
+    beforeDestroy() {
+        this.picked.destroy();
+    },
+    template: `
+    <div>
+      <input type="text" ref="input" />
+      <button @click="$destroy()">销毁组件</button>
+    </div>
+  `,
+});
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 通过程序化的侦听器解决这两个问题
+ *
+ *
+ */
+
+
+Vue.component('my-cmp', {
+    mounted() {
+        var picker = new Pikaday({
+            field: this.$refs.input,
+            format: 'YYYY-MM-DD',
+        });
+        this.$once('hook:beforeDestroy', () => {
+            picker.destroy();
+        })
+    },
+    template: `
+    <div>
+      <input type="text" ref="input" />
+      <button @click="$destroy()">销毁组件</button>
+    </div>
+  `
+});
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 用了这个策略，我们还可以让多个输入框元素使用不同的pikaday
+ *
+ *
+ */
+
+Vue.component('my-cmp', {
+    mounted() {
+        this.datePicker('inputA');
+        this.datePicker('inputB');
+    },
+    methods: {
+        datePicker(refName) {
+            var picker = new Pikaday({
+                field: this.$refs[refName],
+                format: 'YYYY-MM-DD',
+            });
+            this.$once('hook:beforeDestroy', () => {
+                picker.destroy();
+            })
+        },
+    },
+    template: `
+    <div>
+      <input type="text" ref="inputA" />
+      <input type="text" ref="inputB" />
+      <button @click="$destroy()">销毁组件</button>
+    </div>
+  `
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/** 循环引用 **/
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * max stack size exceeded
+ *
+ *
+ * 组件可以在自己的模板中调用自身的，只能通过name选项来做这件事
+ *
+ * name: 'my-cmp'
+ *
+ *
+ * 使用 Vue.component 全局注册一个组件时，全局的ID会自动设置为该组件的 name 选项
+ *
+ * Vue.component('my-cmp', { });
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * Failed to mount component: template or render function not defined
+ *
+ *
+ * 组件互为对方的后代/祖先
+ *
+ * * 使用的是全局注册组件，并不会出现悖论，但是如果使用的为局部组件就会出现悖论
+ */
+
+
+Vue.component('cmp-a', {
+    template: `
+    <div>
+      <cmp-b></cmp-b>
+    </div>
+  `
+});
+
+Vue.component('cmp-b', {
+    template: `
+    <div>
+      <cmp-a></cmp-a>
+    </div>
+  `
+});
+
+
+//- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  - -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  - -//
+
+
+/**
+ * A 是需要 B 的，但不需要先解析 B
+ *
+ */
+
+
+// beforeCreate () {
+//     this.$options.components.CmpB = require('./tree-folder-contents.vue').default;
+// }
+
+
+/**
+ * 在本地注册组件的时候，你可以使用 webpack 的异步 import
+ *
+ */
+
+// components: {
+//     CmpB: () => import('./tree-folder-contents.vue')
+// }
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 模板定义的替代品
+ *
+ *
+ * inline-template 会让模板的作用域变得更加难以理解。
+ * 作为最佳实践，请在组件内优先选择 template 选项或 .vue 文件里的一个 <template> 元素来定义模板
+ *
+ * 可以用于模板特别大的 demo 或极小型的应用，但是其它情况下请避免使用，因为这会将模板和该组件的其它定义分离开
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+/**
+ * inline-template
+ *
+ *
+ * 写上特殊的特性：inline-template，就可以直接将里面的内容作为模板而不是被分发的内容（插槽）
+ */
+
+
+// <my-cmp inline-template>
+//     <div>
+//         <p>These are compiled as the component's own template.</p>
+//         <p>Not parent's transclusion content.</p>
+//     </div>
+// </my-cmp>
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * X-Template
+ *
+ *
+ * 定义模板的方式是在一个 <script> 元素中，并为其带上 text/x-template 的类型，然后通过一个 id 将模板引用过去
+ */
+
+// /<script
+//     type="text/x-template"
+//     id="hello-world-template"
+// />
+// <p>Hello hello hello</p>
+// /<//script/>
+
+
+Vue.component('hello-world', {
+    template: '#hello-world-template'
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/** 控制更新 **/
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 强制更新
+ *
+ *
+ * 当 更改了某个数据，页面未重新渲染时，可以调用 $forceUpdate 来做一次强制更新
+ *
+ * 但是在做强制更新前，需要留意数组或对象的变更检测注意事项，99.9%的情况，都是在某个地方做错了事，
+ * 如果做了上述检查，仍未发现问题，那么可以通过 $forceUpdate来更新
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * 通过v-once创建低开销的静态组件
+ *
+ *
+ * 渲染普通的 HTML 元素在 Vue 中是非常快速的，但有的时候你可能有一个组件，这个组件包含了大量静态内容。
+ * 在这种情况下，你可以在根元素上添加 v-once 特性以确保这些内容只计算一次然后缓存起来
+ */
+
+
+Vue.component('terms-of-service', {
+    template: `
+    <div v-once>
+      <h1>Terms of Service</h1>
+      ... a lot of static content ...
+    </div>
+  `
+});
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

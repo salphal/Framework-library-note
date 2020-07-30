@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+    <style>
+
+
+    </style>
+
+</head>
+<body>
+
+
+<!--================================================================================================================-->
+
+
+<div id="app">
+
+
+    <component is="cmp-a"></component>
+
+
+    <hr>
+
+
+    <component is="cmp-b"></component>
+
+
+    <hr>
+    <br>
+
+    <button
+            v-for="page in pages"
+            :key="page.id"
+            @click="cmpPage = page.cmp"
+    >
+        {{ page.name }}
+    </button>
+    <component :is="cmpPage"></component>
+
+
+    <hr>
+
+
+    <button
+            v-for="blog in blogs"
+            :key="blog.id"
+            @click="blogPage = blog.cmp"
+    >
+        {{ blog.name }}
+    </button>
+    <keep-alive>
+        <component :is="blogPage"></component>
+    </keep-alive>
+
+
+    <hr>
+
+
+
+
+</div>
+
+
+<!--================================================================================================================-->
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Vue.component('cmp-a', {
+
+    template: `
+    <div>component-a</div>
+    `
+});
+
+
+Vue.component('cmp-b', {
+
+    template: `
+    <div>component-a</div>
+    `
+});
+
+
+Vue.component('cmp-post', {
+
+    template: `
+    <div>cmp-post</div>
+    `
+});
+
+
+Vue.component('cmp-more', {
+
+    template: `
+    <div>cmp-more</div>
+    `
+});
+
+
+Vue.component('blog-post', {
+
+    data() {
+
+        return {
+
+            postBlog: undefined,
+            posts: [
+                {title: 'title-1', content: {template: `<div>content-1</div>`}, id: 10},
+                {title: 'title-2', content: {template: `<div>content-2</div>`}, id: 11},
+                {title: 'title-3', content: {template: `<div>content-3</div>`}, id: 12},
+            ]
+        };
+    },
+    mounted() {
+
+        this.postBlog = this.posts[0].content;
+    },
+    activated(){
+
+        console.log('blog-activated');
+    },
+    deactivated() {
+
+        console.log('blog-deactivated');
+    },
+    template: `
+    <div>
+        <button
+            v-for="post in posts"
+            @click="postBlog = post.content"
+            :key="post.id"
+        >
+        {{ post.title }}
+        </button>
+
+        <keep-alive>
+            <component
+            :is="postBlog"
+            >
+            </component>
+        </keep-alive>
+    </div>
+    `
+});
+
+Vue.component('blog-more', {
+
+    activated(){
+
+        console.log('more-activated');
+    },
+    deactivated() {
+
+        console.log('more-deactivated');
+    },
+    template: `
+    <div>blog-more</div>
+    `
+});
+
+
+const vm = new Vue({
+
+    el: '#app',
+    data: {
+        msg: 'hello world',
+        cmpPage: 'cmp-post',
+        blogPage: 'blog',
+        pages: [
+            {name: 'post', cmp: 'cpm-post', id: 0},
+            {name: 'more', cmp: 'cpm-more', id: 1},
+        ],
+        blogs: [
+            {name: 'blog', cmp: 'blog-post', id: 20},
+            {name: 'more', cmp: 'blog-more', id: 21},
+        ]
+    },
+    methods: {},
+    computed: {},
+    watch: {},
+    created() {
+
+    },
+    beforeDestroy() {
+
+    },
+});
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * 动态组件
+ *
+ *
+ */
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * keep-alive
+ *
+ *
+ * <keep-alive> 包裹动态组件时，会缓存不活动的组件实例，而不是销毁它们
+ * <keep-alive> 是一个抽象组件，它自身不会渲染一个 DOM 元素，也不会出现在父组件链中
+ *
+ * 当组件在 <keep-alive> 内被切换，它的 activated 和 deactivated 这两个生命周期钩子函数将会被对应执行
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+/**
+ * activated & deactivated
+ *
+ *
+ * activated: keep-alive 组件激活时调用
+ *
+ * deactivated: keep-alive 组件停用时调用
+ */
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>
