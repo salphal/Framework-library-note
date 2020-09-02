@@ -62,8 +62,6 @@
     <hr>
 
 
-
-
 </div>
 
 
@@ -152,6 +150,7 @@ Vue.component('blog-post', {
     `
 });
 
+
 Vue.component('blog-more', {
 
     activated(){
@@ -176,8 +175,8 @@ const vm = new Vue({
         cmpPage: 'cmp-post',
         blogPage: 'blog',
         pages: [
-            {name: 'post', cmp: 'cpm-post', id: 0},
-            {name: 'more', cmp: 'cpm-more', id: 1},
+            {name: 'post', cmp: 'cmp-post', id: 0},
+            {name: 'more', cmp: 'cmp-more', id: 1},
         ],
         blogs: [
             {name: 'blog', cmp: 'blog-post', id: 20},
@@ -199,18 +198,14 @@ const vm = new Vue({
 //-------------------------------------------------------------------------------------------------------------------//
 
 
-/**
- * 动态组件
- *
- *
- */
+/** 动态组件 **/
 
 
 //-------------------------------------------------------------------------------------------------------------------//
 
 
 /**
- * keep-alive
+ * keep-alive               // 使用该标签时，必须保证该组件有自身的名字( 无论是全局/局部组件 )
  *
  *
  * <keep-alive> 包裹动态组件时，会缓存不活动的组件实例，而不是销毁它们

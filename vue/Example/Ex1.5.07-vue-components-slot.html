@@ -9,6 +9,9 @@
 
     <style>
 
+    hr {
+        margin: 20px 0;
+    }
 
     </style>
 
@@ -22,6 +25,7 @@
 <div id="app">
 
     <my-cmp>
+
         hello world
 
         <hr>
@@ -60,18 +64,18 @@
     <hr>
 
 
-<!--     <my-cmp-2>
+    <!--<my-cmp-2>
 
-            <template v-slot:default="slotProps">
-                {{ slotProps.localUser }}
-            </template>
+        <template v-slot:default="slotProps">
+            {{ slotProps.localUser }}
+        </template>
 
     </my-cmp-2>-->
 
 
     <my-cmp-2 v-slot="slotProps">
 
-            {{ slotProps.localUser }}
+        {{ slotProps.localUser }}
 
     </my-cmp-2>
 
@@ -120,7 +124,6 @@
         <template v-slot:[dynamicSlotName]/>
 
     </my-cmp-4>
-
 
 
 </div>
@@ -230,7 +233,6 @@ Vue.component(dynamicSlotName, {
 });
 
 
-
 const vm = new Vue({
 
     el: '#app',
@@ -271,14 +273,14 @@ const vm = new Vue({
 // </my-cmp>
 
 
-Vue.component('my-cmp', {
-
-    template: `
-    <div>
-        <slot/>
-    </div>
-    `
-});
+// Vue.component('my-cmp', {
+//
+//     template: `
+//     <div>
+//         <slot/>
+//     </div>
+//     `
+// });
 
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
@@ -298,7 +300,7 @@ Vue.component('my-cmp', {
 
 
 /**
- * 后备内容
+ * 后备内容             // 默认插槽( name: default | 无命名 )
  *
  *
  * 当使用组件未提供插槽时，后备内容将会被渲染。如果提供插槽，则后备内容将会被取代
@@ -311,15 +313,15 @@ Vue.component('my-cmp', {
 //
 // </div>
 
-Vue.component('my-button', {
-
-
-    template: `
-    <button>
-        <slot>submit</slot>             // html 中使用单标签时，可以将内容设置在组件的插槽中
-    </button>
-    `
-});
+// Vue.component('my-button', {
+//
+//
+//     template: `
+//     <button>
+//         <slot>submit</slot>             // html 中使用单标签时，可以将内容设置在组件的插槽中
+//     </button>
+//     `
+// });
 
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
@@ -354,7 +356,6 @@ Vue.component('my-button', {
 //         </div>
 //     `
 // });
-
 
 
 // Vue.component('my-cmp', {
@@ -392,7 +393,6 @@ Vue.component('my-button', {
 // </my-cmp-1>
 
 
-
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
 
 
@@ -423,8 +423,6 @@ Vue.component('my-button', {
 // </my-cmp-1>
 
 
-
-
 //-------------------------------------------------------------------------------------------------------------------//
 
 
@@ -450,25 +448,24 @@ Vue.component('my-button', {
 // </my-cmp-2>
 
 
-Vue.component('my-cmp-2', {
-
-    data() {
-
-        return {
-
-            localUser: {
-                name: 'alpha',
-                age: 18
-            }
-        };
-    },
-    template: `
-    <span>
-      <slot v-bind:localUser="localUser"/>
-    </span>
-    `
-});
-
+// Vue.component('my-cmp-2', {
+//
+//     data() {
+//
+//         return {
+//
+//             localUser: {
+//                 name: 'alpha',
+//                 age: 18
+//             }
+//         };
+//     },
+//     template: `
+//     <span>
+//       <slot v-bind:localUser="localUser"/>
+//     </span>
+//     `
+// });
 
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
@@ -541,9 +538,39 @@ Vue.component('my-cmp-2', {
  * Vue 2.6.0+
  */
 
+// <my-cmp>
+//     <template v-slot:[dynamicSlotName]>
+//     ...
+// </template>
+// </my-cmp>
 
 
+//-------------------------------------------------------------------------------------------------------------------//
 
+
+/**
+ * 具名插槽缩写
+ *
+ *
+ * v-slot === #
+ *
+ * * 缩写仅在其有参数的时候才可用
+ */
+
+// <my-cmp>
+//     <template #header>
+//     <h1>头部</h1>
+// </template>
+//
+// <template #default>
+// <p>内容</p>
+// <p>内容</p>
+// </template>
+//
+// <template #footer>
+// <p>底部</p>
+// </template>
+// </my-cmp>
 
 
 //-------------------------------------------------------------------------------------------------------------------//

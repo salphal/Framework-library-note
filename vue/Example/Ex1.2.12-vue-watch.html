@@ -72,7 +72,7 @@ const vm = new Vue({
     },
     watch: {
 
-        msgCallback: function (newVal, oldVal) {
+        msgCallback: function (newVal, oldVal) {                // function
 
             // console.log(`newVal: ${newVal}, oldVal: ${oldVal}`);
             console.log('msgCallback changed');
@@ -80,7 +80,7 @@ const vm = new Vue({
 
         msg2: 'msgMethod',
 
-        msgObj: {
+        msgObj: {                                               // object
 
             handle() {
 
@@ -90,7 +90,7 @@ const vm = new Vue({
             deep: true,                 // 开启深度监听: 监听对象中的所有属性
         },
 
-        'msgObj.age': function () {
+        'msgObj.age': function () {                             // string
 
             console.log('msgObj.prop changed');
         }

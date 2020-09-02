@@ -24,7 +24,6 @@
         </base-slots>
 
 
-
     </div>
 
 
@@ -45,7 +44,8 @@ export default {
         BaseLevel,
         BaseData,
     },
-    render(h){
+
+    render(h) {
 
         return h('div', {
 
@@ -56,7 +56,7 @@ export default {
 
             h('base-slots', {
 
-                scopedSlots:  function (props) {
+                scopedSlots: function (props) {
 
                     return props.text;
                 }
@@ -64,6 +64,7 @@ export default {
         ]);
     }
 }
+
 </script>
 
 <style>

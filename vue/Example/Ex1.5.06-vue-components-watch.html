@@ -10,6 +10,11 @@
     <style>
 
 
+    hr {
+        margin: 20px 0;
+    }
+
+
     </style>
 
 </head>
@@ -34,7 +39,7 @@
 
     <hr>
 
-
+    <!-- 利用 ".native" 修饰符，才可以监听默认事件 -->
     <base-input @focus.native="onFocus" @blur.native="onBlur"></base-input>
 
 
@@ -76,12 +81,14 @@
     <hr>
 
 
-<!--    <base-input-4
+    <!--    <base-input-4
             :value="name" @update:input="name = $event"
     >
     </base-input-4>-->
 
 
+    <!-- 使用 ".sync" 修饰符，即可省略 "@update:input="name = $event" -->
+    <!-- 但监听时，事件名前必须有 "update:" -->
     <base-input-4
             :value.sync="name"
     >
@@ -116,15 +123,10 @@ Vue.component('blog-post', {
 Vue.component('base-input', {
 
     template: `
-    <input type="text"/>
-    `
-});
-
-
-Vue.component('base-input', {
-
-    template: `
-    <input type="text"/>
+    <label>
+        name:
+        <input type="text"/>
+    </label>
     `
 });
 
@@ -148,7 +150,9 @@ Vue.component('base-input-1', {
 
 Vue.component('base-input-2', {
 
-    props: ['value'],
+    props: {
+        value: String
+    },
     template: `
     <label>
         name:
@@ -161,7 +165,7 @@ Vue.component('base-input-2', {
 Vue.component('base-input-3', {
 
     props: ['value'],
-    module: {
+    model: {
         prop: 'checked',        // 指定默认绑定的特性
         event: 'change',        // 指定监听的事件
     },
@@ -179,7 +183,7 @@ Vue.component('base-checkbox', {
     props: {
         checked: Boolean,
     },
-    module: {
+    model: {
         prop: 'checked',        // 指定默认绑定的特性
         event: 'change',        // 指定监听的事件
     },
@@ -246,11 +250,16 @@ const vm = new Vue({
     },
     computed: {},
     watch: {},
-    created() {
+    mounted() {
 
-    },
-    beforeDestroy() {
+        /**
+         * $listeners
+         *
+         *
+         * 包含指定元素所有监听事件的集合
+         */
 
+        console.log(this.$listeners);
     },
 });
 
@@ -262,7 +271,7 @@ const vm = new Vue({
  * $emit(eventName: str, params);
  *
  *
- * @eventName: 监听的事件名
+ * @eventName: 监听的事件( 避免使用小驼峰或大驼峰命名事件，从而引发 html 将事件名转换为字母小写的问题 )
  *
  * @params: 抛出的参数
  *
@@ -440,7 +449,6 @@ const vm = new Vue({
 // });
 
 
-
 //-------------------------------------------------------------------------------------------------------------------//
 
 
@@ -450,7 +458,8 @@ const vm = new Vue({
  *
  * 在 vue 1.x 时，就已经支持 .sync 语法，但是此时的 .sync 可以完全在子组件中修改父组件的状态，
  * 造成整个状态的变换很难追溯，所以官方在2.0时移除了这个特性
- * vue2.3时，.sync又回归了，跟以往不同的是，现在的.sync完完全全就是一个语法糖的作用，
+ *
+ * vue2.3时，.sync又回归了，跟以往不同的是，现在的 .sync 完完全全就是一个语法糖的作用，
  * 跟v-model的实现原理是一样的，也不容易破环院有的数据模型，所以使用上更安全也更方便
  *
  *
@@ -459,7 +468,7 @@ const vm = new Vue({
  *
  * 2) vue 1.x 的 .sync 和 v-model 是完全两个东西，vue 2.3 之后可以理解为一类特性，使用场景略微有区别
  *
- * 3) 当一个组件对外只暴露一个受控的状态，切都符合统一标准的时候，我们会使用v-model来处理
+ * 3) 当一个组件对外只暴露一个受控的状态，切都符合统一标准的时候，我们会使用 v-model 来处理
  *    .sync则更为灵活，凡是需要双向数据传递时，都可以去使用
  */
 
@@ -470,9 +479,6 @@ const vm = new Vue({
 
 </body>
 </html>
-
-
-G
 
 
 

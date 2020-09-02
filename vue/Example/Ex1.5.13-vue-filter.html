@@ -10,6 +10,10 @@
     <style>
 
 
+    hr {
+        margin: 20px 0;
+    }
+
 
     </style>
 
@@ -41,7 +45,7 @@
     <hr>
 
 
-    {{ word | addWord}}
+    {{ word | addWord }}
 
 
 </div>
@@ -54,15 +58,15 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-Vue.filter('globalFilterA', (param)=> {                 // global filter
+Vue.filter('globalFilterA', (param) => {                 // global filter
 
-    console.log( param);
+    console.log(param);
 
     return 'globalFilterA';
 });
 
 
-Vue.filter('globalFilterB', (param)=> {                 // global filter
+Vue.filter('globalFilterB', (param) => {                 // global filter
 
     console.log(param);
 
@@ -70,27 +74,27 @@ Vue.filter('globalFilterB', (param)=> {                 // global filter
 });
 
 
-Vue.filter('capitalize', param => {
+Vue.filter('capitalize', param => {                     // global filter
 
     if (!param) {
         return;
     }
 
-     return  param.charAt(0).toUpperCase() + param.slice(1);
+    return param.charAt(0).toUpperCase() + param.slice(1);
 
 });
 
 
-Vue.filter('toMoney', money => {
+Vue.filter('toMoney', money => {                        //  global filter
 
     return money.toLocaleString();
 });
 
 
-Vue.filter('addWord', data => {
+Vue.filter('addWord', data => {                         // global filter
 
 
-    if (!data){
+    if (!data) {
 
         return;
     }
@@ -124,15 +128,9 @@ const vm = new Vue({
             return 'local-filter';
         },
     },
-    methods: {
-
-    },
-    computed: {
-
-    },
-    watch: {
-
-    },
+    methods: {},
+    computed: {},
+    watch: {},
     created() {
 
     },
@@ -200,7 +198,7 @@ const vm = new Vue({
  *
  * 当过滤器形式为 msg | filter 时，filter 过滤器接收一个参数，参数为 msg
  *
- * 当过滤器形式为 msg | filter('a') 时，filter 过滤器接收两个参数，参数为 msg, 'a'
+ * 当过滤器形式为 msg | filter('a') 时，filter 过滤器接收两个参数，参数为 ( msg, 'a' )
  */
 
 
@@ -212,14 +210,13 @@ const vm = new Vue({
  *
  *
  * {{ msg | filterA | filterB }}
+ *
+ * filterA 的参数为 msg，filterB 的参数为 filterA
  */
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 </script>
-
-
-
 
 
 </body>

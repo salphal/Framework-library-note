@@ -88,7 +88,7 @@ const vm = new Vue({
  * v-model                  // father <=> son
  *
  *
- *
+ * 双向数据通信
  */
 
 
@@ -99,7 +99,7 @@ const vm = new Vue({
  * .sync                    // father <=> son
  *
  *
- *
+ * 双向数据通信
  */
 
 
@@ -110,7 +110,7 @@ const vm = new Vue({
  * $attrs                   // ancestor => posterity
  *
  *
- * 祖先组件传递数据给子孙组件时，可以利用$attrs传递
+ * 祖先组件传递数据给子孙组件时，可以利用 $attrs 传递
  */
 
 
@@ -122,6 +122,7 @@ const vm = new Vue({
  *
  *
  * 子孙组件中执行祖先组件的函数，从而实现数据传递
+ * 将所有的事件监听器指向这个组件的某个特定的子元素
  */
 
 

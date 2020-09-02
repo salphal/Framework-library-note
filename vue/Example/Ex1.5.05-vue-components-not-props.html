@@ -10,7 +10,6 @@
     <style>
 
 
-
     </style>
 
 </head>
@@ -28,7 +27,7 @@
     <!-- not-prop: 非特性会直接添加到组件的根元素上 -->
     <!-- class&style: class&style 特性会和组件的相同特性合并 -->
 
-    <my-cmp-1  prop="this-is-prop" not-prop="this-is-not-prop" class="addClass">
+    <my-cmp-1 prop="this-is-prop" not-prop="this-is-not-prop" class="addClass">
     </my-cmp-1>
 
 
@@ -65,8 +64,18 @@ Vue.component('my-cmp-1', {
 Vue.component('my-cmp-2', {
 
     props: ['prop'],
-    inheritAttrs: false,
+    inheritAttrs: false,                // 不会影响 class & style 特性的合并
     mounted() {
+
+        /**
+         * $attrs {
+         *
+         *     key: val
+         * }
+         *
+         * @key: 传递的特性名
+         * @val: 传递的特性值
+         */
 
         console.log(this.$attrs);
     },
@@ -86,15 +95,9 @@ const vm = new Vue({
         msg: 'hello world',
 
     },
-    methods: {
-
-    },
-    computed: {
-
-    },
-    watch: {
-
-    },
+    methods: {},
+    computed: {},
+    watch: {},
     created() {
 
     },
@@ -162,9 +165,6 @@ const vm = new Vue({
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 </script>
-
-
-
 
 
 </body>

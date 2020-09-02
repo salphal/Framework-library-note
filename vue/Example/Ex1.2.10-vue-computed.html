@@ -42,6 +42,10 @@
     <hr>
 
 
+    computed-getter & setter:
+
+
+
 
 
 
@@ -86,6 +90,7 @@ const vm = new Vue({
         },
 
 
+
     }
 });
 
@@ -94,7 +99,7 @@ const vm = new Vue({
 
 
 /**
- * computed: func, obj;
+ * computed: func, obj;             // 计算属性的结果仅关注于返回值
  *
  *
  * 计算属性( 插槽 )
@@ -136,6 +141,7 @@ const vm = new Vue({
  *          _val = val;
  *     }
  * }
+ *
  */
 
 
@@ -146,9 +152,9 @@ const vm = new Vue({
  * methods vs computed
  *
  *
- * methods: 页面渲染，及会执行一次                             //
+ * methods: 每次页面渲染，对应的方法及会执行一次                 //
  *
- * computed: 仅当依赖响应式属性改变时，才会执行                  // 基于响应式依赖进行缓存( 节省性能开销 )
+ * computed: 仅当依赖响应式属性data改变时，才会执行              // 基于响应式依赖进行缓存( 节省性能开销 )
  */
 
 
