@@ -3,7 +3,9 @@
 <!--</template>-->
 
 <script>
+
 export default {
+
     name: "BaseSlots",
     data() {
 
@@ -26,6 +28,7 @@ export default {
         ]);
     }
 }
+
 </script>
 
 <style scoped>

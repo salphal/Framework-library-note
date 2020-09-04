@@ -24,6 +24,15 @@
 
         <base-demo6></base-demo6>
 
+        <hr>
+
+        <base-demo7></base-demo7>
+
+        <hr>
+
+        <base-demo8></base-demo8>
+
+        <hr>
 
     </div>
 
@@ -39,6 +48,8 @@ import BaseDemo3 from './components/BaseDemo3';
 import BaseDemo4 from './components/BaseDemo4';
 import BaseDemo5 from './components/BaseDemo5';
 import BaseDemo6 from './components/BaseDemo6';
+import BaseDemo7 from './components/BaseDemo7';
+import BaseDemo8 from './components/BaseDemo8';
 
 
 export default {
@@ -52,6 +63,8 @@ export default {
         BaseDemo4,
         BaseDemo5,
         BaseDemo6,
+        BaseDemo7,
+        BaseDemo8,
     },
 }
 

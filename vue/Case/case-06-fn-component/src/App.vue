@@ -5,15 +5,18 @@
 
         <template #default="{text}">
 
-            Title {{ text }}
+            content: {{ text }}
+
         </template>
 
         <template #header="{text}">
 
-            Title {{ text }}
+            content: {{ text }}
+
         </template>
 
         <div>div</div>
+
         <p>p</p>
 
     </base-level>
@@ -29,8 +32,10 @@ import BaseLevel from './components/BaseLevel'
 export default {
 
     components: {
+
         BaseLevel
     },
+
     provide() {
 
         return {
@@ -38,6 +43,7 @@ export default {
             name: 'alpha'
         }
     },
+
     methods: {
 
         handleClick() {

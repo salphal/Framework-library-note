@@ -31,15 +31,19 @@
 import BaseData from './components/BaseData';
 import BaseSlot from './components/BaseSlot';
 import BaseSlotHW from './components/BaseSlotHW';
+import BaseDemo from './components/BaseDemo';
 
 
 export default {
+
     name: 'App',
     components: {
         BaseData,
         BaseSlot,
-        BaseSlotHW
+        BaseSlotHW,
+        BaseDemo
     },
+
     data() {
 
         return {
@@ -51,8 +55,6 @@ export default {
             arr1: [4, 5, 6],
             arr2: [7, 8, 9],
             content: 'alpha',
-
-
         };
     },
 
@@ -83,23 +85,22 @@ export default {
             }
         }
     },
-    mounted() {
 
-        console.log(this.$refs);
-
-    },
     render(h) {
 
         const directives = [
-            {
-                name: 'splice',
-                value: this.value,
-                modifiers: {number: true}
-            }
-        ], scopedSlots = {
 
-            default: props => <span>{ props.text }</span>
-        };
+                {
+                    name: 'splice',
+                    value: this.value,
+                    modifiers: {number: true}
+                }
+
+            ],
+            scopedSlots = {
+
+                default: props => <span>{props.text}</span>
+            };
 
         return (
 
@@ -110,11 +111,17 @@ export default {
                 {this.msg}
 
 
+                <hr/>
+
+
                 <div domPropsInnerHTML="<a>href</a>"/>
 
                 <div domPropsTextContent="<a>href</a>"/>
 
                 <div v-show={this.show}>show</div>
+
+
+                <hr/>
 
 
                 {true && <div>div</div>}
@@ -124,14 +131,28 @@ export default {
                 {this.vIf()}
 
 
+                <hr/>
+
+
                 <ul>
                     {this.arr.map(item => <li key={item}>{item}</li>)}
                 </ul>
 
 
+                <hr/>
+
+
                 <button on-click={this.handleClick}>click</button>
 
+                <br/>
+
                 <button onClick={this.handleClick}>click</button>
+
+                <br/>
+
+                <base-demo nativeOnClick={this.handleClick}/>
+
+                <br/>
 
                 <button onClick={() => {
                     this.handleClick(1)
@@ -139,10 +160,24 @@ export default {
                 </button>
 
 
-                <div class={['a', 'b']} style={{fontSize: '14px', color: 'red'}}>v-bind</div>
+                <hr/>
 
-                <input v-model={this.content}/>
-                {this.content}
+
+                <div
+                    class={['a', 'b']}
+                    style={{fontSize: '14px', color: 'red'}}
+                >
+                    v-bind
+                </div>
+
+
+                <hr/>
+
+
+                <input v-model={this.content}/>{this.content}
+
+
+                <hr/>
 
 
                 <input ref="input"/>
@@ -152,9 +187,15 @@ export default {
                 {this.arr2.map(item => <div ref="xx" refInFor={true} key={item}>{item}</div>)}
 
 
+                <hr/>
+
+
                 <input v-splice={{value: this.value, modifiers: {number: true}}}/>
 
                 <div {...{directives}}></div>
+
+
+                <hr/>
 
 
                 <base-slot>
@@ -164,12 +205,21 @@ export default {
 
                 </base-slot>
 
+
                 <base-slot-h-w {...{scopedSlots: {default: (props) => props.text}}} />
 
                 <base-slot-h-w {...scopedSlots} />
 
+
             </h1>
         );
+    },
+
+    mounted() {
+
+        console.log(this.$refs);
+
+        console.log('this.$scopedSlots: ', this.$scopedSlots);
     }
 }
 

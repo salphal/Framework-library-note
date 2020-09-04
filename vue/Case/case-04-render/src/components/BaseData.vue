@@ -23,7 +23,9 @@ export default {
     // render(); 和 <template><template/> 不能共存，必须注释 template-tag 才能使用 render();
     render(createElement) {
 
-        return createElement('div', {
+        return createElement('div',
+
+            {
 
                 // 与 `v-bind:class` 的 API 相同，接受一个字符串、对象或字符串和对象组成的数组
                 class: {
@@ -99,7 +101,7 @@ export default {
                     },
 
                     [
-                        createElement('p',{
+                        createElement('p', {
 
                             slot: 'default'
 
@@ -112,7 +114,6 @@ export default {
                         }, 'my-slot')
 
                     ]),
-
 
                 createElement('base-if-for', {
 

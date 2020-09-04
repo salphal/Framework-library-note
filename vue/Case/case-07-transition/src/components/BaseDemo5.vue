@@ -1,10 +1,11 @@
 <template>
 
-    <div class="class">
+    <div class="demo5">
 
         <button @click="show = !show">click</button>
 
         <transition
+
                 enter-class="enter"
                 enter-active-class="enter-active"
                 enter-to-class="enter-to"

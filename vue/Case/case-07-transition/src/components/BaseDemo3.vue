@@ -1,6 +1,6 @@
 <template>
 
-    <div class="class">
+    <div class="demo3">
 
         <button @click="show = !show">click</button>
 
