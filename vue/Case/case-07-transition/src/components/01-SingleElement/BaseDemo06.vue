@@ -22,7 +22,7 @@
 
 <script>
 
-import "animate.css";
+import "../../../node_modules/animate.css/animate.css";
 
 export default {
 

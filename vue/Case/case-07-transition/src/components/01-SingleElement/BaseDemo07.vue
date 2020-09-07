@@ -6,7 +6,7 @@
 
         <transition
 
-                :duration="1000"
+                type="animate__animated"
                 enter-active-class="animate__animated animate__tada v-enter-active"
                 leave-active-class="animate__animated animate__tada v-leave-active"
         >
@@ -19,11 +19,11 @@
 
 <script>
 
-import "animate.css";
+import "../../../node_modules/animate.css/animate.css";
 
 export default {
 
-    name: "BaseDemo8",
+    name: "BaseDemo7",
     data() {
 
         return {
@@ -38,35 +38,13 @@ export default {
 
 
 /**
- * 同时使用过渡和动画            // type="target"
+ * 同时使用过渡和动画            // <div type="target"></div>
  *
  *
  * 1) 当不设置 type 时，默认会取 transitioned 和 animationed 两者更长的为结束时刻
  *
  * 2) 当设置 type 时，需指定 type 所监听的类型( animation | transition )
  *    当指定其中一种为主要监听对象时，当该监听对象执行完成后，则停止过渡效果
- */
-
-
-//-------------------------------------------------------------------------------------------------------------------//
-
-
-/**
- * 显性的过渡时间              // :duration=time
- *
- *
- * Vue可以自动得出过渡效果的完成时机，从而对dom进行处理
- */
-
-
-//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
-
-
-/**
- *
- *
- *
- *
  */
 
 
@@ -98,7 +76,7 @@ button {
 
 .v-enter-active,
 .v-leave-active {
-    transition: all 13s;
+    transition: all 3s;
 }
 
 .v-enter-to,
