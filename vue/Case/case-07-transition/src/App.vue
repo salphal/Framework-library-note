@@ -98,6 +98,51 @@
 
         <hr>
 
+        <button  @click="show40 = !show40">click</button>
+
+        <base-demo40>
+
+            <transition>
+
+                <div v-if="show40">hello world</div>
+
+            </transition>
+
+        </base-demo40>
+
+        <hr>
+
+        <hr>
+
+        <button  @click="show41 = !show41">click</button>
+
+        <base-demo41>
+
+            <transition>
+
+                <div v-if="show41">just do it</div>
+
+            </transition>
+
+        </base-demo41>
+
+        <hr>
+
+        <button  @click="show42 = !show42">click</button>
+
+        <base-demo41>
+
+            <transition>
+
+                <div key="jd1" v-if="show42">just do it - 1</div>
+                <div key="jd2" v-else="show42">just do it - 2</div>
+
+            </transition>
+
+        </base-demo41>
+
+        <hr>
+
     </div>
 
 </template>
@@ -134,12 +179,15 @@ import BaseDemo32 from './components/03-ListElement/BaseDemo32';
 import BaseDemo33 from './components/03-ListElement/BaseDemo33';
 
 
+import BaseDemo40 from './components/04-ReuseTransition/BaseDemo40';
+import BaseDemo41 from './components/04-ReuseTransition/BaseDemo41';
 
 
 export default {
 
     name: 'app',
     components: {
+
 
         BaseDemo01,
         BaseDemo02,
@@ -155,17 +203,33 @@ export default {
         BaseDemo12,
         BaseDemo13,
 
+
         BaseDemo20,
         BaseDemo21,
         BaseDemo22,
         BaseDemo23,
         BaseDemo24,
 
+
         BaseDemo30,
         BaseDemo31,
         BaseDemo32,
         BaseDemo33,
+
+
+        BaseDemo40,
+        BaseDemo41,
+
     },
+    data() {
+
+        return {
+
+            show40: true,
+            show41: true,
+            show42: true,
+        }
+    }
 }
 
 

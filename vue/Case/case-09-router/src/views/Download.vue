@@ -1,18 +1,13 @@
 <template>
 
-
-    <div class="activity">
-
-        社区
-
-    </div>
+    <div>资源下载</div>
 
 
 </template>
 
 <script>
 export default {
-    name: "Activity"
+    name: "Download"
 }
 </script>
 
