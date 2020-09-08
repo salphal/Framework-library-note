@@ -120,6 +120,30 @@ const routes = [
             },
         ]
     },
+    {
+        /**
+         *
+         *
+         *
+         *
+         */
+
+        path: '/course/:id',
+        component: () => import('/views/About')
+    }
+    // {
+    //     path: '/course',
+    //     children: [                  // 代码冗余
+    //         {
+    //             path: '331578',
+    //             component: () => import('/views/About')
+    //         },
+    //         {
+    //             path: '231578',
+    //             component: () => import('/views/About')
+    //         }
+    //     ]
+    // }
 ];
 
 export default new VueRouter({

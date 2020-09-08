@@ -8,12 +8,15 @@
     </div>
 
 
-
 </template>
 
 <script>
 export default {
-    name: "About"
+    name: "About",
+    mounted() {
+
+        console.log(this.$route.params);            // 活动动态路由的 动态路径参数
+    }
 }
 </script>
 
