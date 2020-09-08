@@ -122,15 +122,17 @@ const routes = [
     },
     {
         /**
+         * :id
          *
          *
+         * 对于所有 ID 各不相同的用户，都使用这个组件来渲染
          *
-         *
+         * * 当匹配到一个路由时，参数值会被设置到 this.$route.params，可以在每个组件内使用
          */
 
-        path: '/course/:id',
-        component: () => import('/views/About')
-    }
+        path: '/course/:id',            // 动态路径参数 以冒号开头
+        component: () => import('./views/About')
+    },
     // {
     //     path: '/course',
     //     children: [                  // 代码冗余
@@ -144,6 +146,11 @@ const routes = [
     //         }
     //     ]
     // }
+    {
+        path: '/question/:id',
+        name: 'question',
+        component: () => import('./views/Question')
+    }
 ];
 
 export default new VueRouter({
