@@ -26,7 +26,10 @@
 
             <!-- 路由出口 -->
             <!-- 路由匹配到的组件将渲染在这里 -->
-            <router-view></router-view>
+
+            <router-view></router-view>                             <!-- 默认视口: default -->
+            <router-view name="student"></router-view>              <!-- 命名视口: 指定命名-->
+
         </div>
 
     </div>
@@ -52,17 +55,17 @@ export default {
              * $route
              *
              *
-             * $route.path          // 字符串，对应当前路由的路径，总是解析为绝对路径
+             * $route.path              // 字符串，对应当前路由的路径，总是解析为绝对路径
              *
-             * $route.params        // 一个 key/value 对象，包含了动态片段和全匹配片段，如果没有路由参数，就是一个空对象
+             * $route.params            // 一个 key/value 对象，包含了动态片段和全匹配片段，如果没有路由参数，就是一个空对象
              *
-             * $route.query         // 一个 key/value 对象，表示 URL 查询参数, 如果没有查询参数，则是个空对象
+             * $route.query             // 一个 key/value 对象，表示 URL 查询参数, 如果没有查询参数，则是个空对象
              *
-             * $route.hash          // 路由的 hash 值 (带 #) ，如果没有 hash 值，则为空字符串
+             * $route.hash              // 路由的 hash 值 (带 #) ，如果没有 hash 值，则为空字符串
              *
-             * $route.fullPath      // 完成解析后的 URL，包含查询参数和 hash 的完整路径
+             * $route.fullPath          // 完成解析后的 URL，包含查询参数和 hash 的完整路径
              *
-             * $route.matched       // 一个数组，包含当前路由的所有嵌套路径片段的路由记录
+             * $route.matched           // 一个数组，包含当前路由的所有嵌套路径片段的路由记录
              *
              * $route.name              // 当前路由的名称，如果有的话
              *

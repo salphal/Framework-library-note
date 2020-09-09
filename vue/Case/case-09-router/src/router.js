@@ -18,7 +18,24 @@ const routes = [
     },
     {
         path: '/learn',
-        component: () => import('./views/Learn'),
+
+        // component: () => import('./views/Learn'),    // 对应单个视口
+
+        components: {                                   // 一个视图使用一个组件渲染，因此对于同个路由，多个视图就需要多个组件
+
+            /**
+             * 命名视图
+             *
+             *
+             * 同时展示多个视图时，并且每个视图展示不同的组件
+             *
+             * * 可以在界面中拥有多个单独命名的视图，而不是只有一个单独的出口
+             * * 如果 router-view 没有设置名字，那么默认为 default
+             */
+
+            default: () => import('./views/Learn'),
+            student: () => import('./views/Student'),
+        }
     },
     {
         path: '/about',
@@ -149,6 +166,23 @@ const routes = [
     {
         path: '/question/:id',
         name: 'question',
+
+        /**
+         * 路由组件传参
+         *
+         *
+         * 组件中使用 $route 会使之与其对应路由形成高度耦合，从而使组件只能在某些特定的 URL 上使用，限制了其灵活性
+         *
+         *
+         * * 1) 布尔模式: 路由设置中 props:true，则 route.params 将会被设置为组件属性
+         *
+         * * 2) 对象模式: 如果 props 是一个对象，它会被按原样设置为组件属性。当 props 是静态的时候有用     // 被写死，无法更改
+         *
+         * * 3) 函数模式:
+         */
+
+        props: true,
+
         component: () => import('./views/Question')
     }
 ];
