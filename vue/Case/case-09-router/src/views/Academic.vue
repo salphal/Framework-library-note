@@ -33,7 +33,8 @@ export default {
 
             this.questionList = res;
         });
-    }
+    },
+
 }
 
 </script>

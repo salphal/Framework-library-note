@@ -27,8 +27,13 @@
             <!-- 路由出口 -->
             <!-- 路由匹配到的组件将渲染在这里 -->
 
-            <router-view></router-view>                             <!-- 默认视口: default -->
-            <router-view name="student"></router-view>              <!-- 命名视口: 指定命名-->
+
+            <transition>
+                <router-view></router-view>                             <!-- 默认视口: default -->
+            </transition>
+
+
+            <!--<router-view name="student"></router-view>              &lt;!&ndash; 命名视口: 指定命名&ndash;&gt;-->
 
         </div>
 
@@ -322,5 +327,17 @@ export default {
 .container {
     margin-top: 60px;
 }
+
+
+.v-enter {
+
+    transform: translateX(1000px);
+}
+
+.v-enter-active {
+
+    transition: all .3s;
+}
+
 
 </style>

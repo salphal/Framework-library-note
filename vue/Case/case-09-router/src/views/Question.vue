@@ -35,6 +35,10 @@ export default {
 
         id: {
             type: [String, Number]
+        },
+        name: {
+            type: [String],
+            default: 'question'
         }
     },
     data() {
@@ -49,7 +53,34 @@ export default {
         // this.getData();
 
         console.log(this.id);
+
+        console.log(this.name);             // 必须开启路由函数传参模式
     },
+
+    beforeRouteUpdate(to, from, next) {
+
+
+        // console.log('before-route-update');
+
+        next();
+
+    },
+    beforeRouteLeave(to, from, next) {
+
+
+        // console.log('before-route-leave');
+
+        // next();
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        const isGo = window.confirm('是否要离开，不再看看嘛');
+
+        isGo ? next() : next(false);
+    },
+
     methods: {
 
         handleClick(id) {

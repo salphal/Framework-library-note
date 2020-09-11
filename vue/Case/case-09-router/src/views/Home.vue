@@ -4,6 +4,8 @@
 
         首页
 
+        <router-link to="/about#scroll-behavior">去关于</router-link>
+
     </div>
 
 </template>

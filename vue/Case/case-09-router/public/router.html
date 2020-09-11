@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<!--<router-link>-->
+
+<!-- hash mode -->
+<!--<a href="#/">首页</a>-->
+<!--<a href="#/about">关于</a>-->
+
+
+<!-- hash mode -->
+<!--<span onlcik="routerHashChange('/')">首页</span>-->
+<!--<span onlcik="routerHashChange('/about')">关于</span>-->
+
+
+<!-- history mode -->
+<span onclick="routerHistoryChange('/')">首页</span>
+<span onclick="routerHistoryChange('/about')">关于</span>
+
+
+<!--</router-link>-->
+
+<div id="view"></div>
+
+
+<script>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/**
+ * hash mode
+ *
+ *
+ * url 会改变
+ * 浏览器可前进和后退
+ * 浏览器不刷新
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+window.addEventListener('DOMContentLoaded', () => {
+
+    view.innerHTML = location.hash.slice(1);
+});
+
+
+window.addEventListener('hashchange', () => {
+
+    view.innerHTML = location.hash.slice(1);
+});
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+function routerHashChange(pathname) {
+
+    location.hash = pathname;
+}
+
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+
+/**
+ * history mode
+ *
+ *
+ * 无锚点
+ *
+ * 需要服务端配合
+ */
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+function routerHistoryChange(pathname) {
+
+    history.pushState(null, null, pathname);
+
+    view.innerHTML = location.pathname;
+}
+
+
+window.addEventListener('popstate', ()=>{
+
+    view.innerHTML = location.pathname;
+});
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</body>
+</html>
