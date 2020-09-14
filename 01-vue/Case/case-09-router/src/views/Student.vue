@@ -3,7 +3,11 @@
 
     <div class="student">
 
-        学员展示
+        <student-add></student-add>
+
+        <hr>
+
+        <student-list></student-list>
 
     </div>
 
@@ -11,8 +15,24 @@
 </template>
 
 <script>
+
+/**
+ * @ == src
+ *
+ *
+ *
+ */
+
+import StudentAdd from '../components/StudentAdd'
+import StudentList from '../components/StudentList'
+
 export default {
     name: "Student",
+    components: {
+
+        StudentList,
+        StudentAdd
+    },
     data() {
 
         return {
