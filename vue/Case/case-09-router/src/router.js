@@ -82,7 +82,7 @@ const routes = [
          *
          * 可以重定向为: 路径, 命名路由, 方法
          *
-         * “重定向”的意思是，当用户访问 /a时，URL 将会被替换成 /b，然后匹配路由为 /b
+         * “重定向”的意思是，当用户访问 /a 时，URL 将会被替换成 /b，然后匹配路由为 /b
          */
 
         /**
@@ -111,6 +111,7 @@ const routes = [
         component: () => import(/*webpackChunkName: 'academic'*/'./views/Activity'),
 
         redirect: '/activity/academic',                     // 重定向
+
         alias: '/',                                         // 别名
 
         // redirect(to) {           // to:
@@ -140,7 +141,6 @@ const routes = [
          *
          *
          * <router-link :to="{ name: 'personal' }">个人中心</router-link>
-         *
          */
 
         /**

@@ -14,6 +14,7 @@
 </template>
 
 <script>
+
 export default {
     name: "About",
     mounted() {
@@ -29,6 +30,7 @@ export default {
         console.log(this.$route.meta);
     }
 }
+
 </script>
 
 <style scoped>
