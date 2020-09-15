@@ -26,7 +26,7 @@ export default {
     },
     computed: {
 
-        ...mapState({
+        ...mapState('count', {
 
             // storeCount: state => state.count,
 

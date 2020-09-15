@@ -21,21 +21,21 @@
 <div id="app" v-cloak>
 
 
-    <span v-pre>v-pre: {{ msg }}</span>     <!-- 不会被 vue 编译 -->
+    <span v-pre>v-pre: {{ msg }}</span>                     <!-- 不会被 vue 编译 -->
 
 
-    <div v-cloak>v-clock: {{ msg }}</div>   <!-- 会一直保留在 dom 元素上，直到 dom 编译结束后，会自动去除 -->
+    <div v-cloak>v-clock: {{ msg }}</div>                   <!-- 会一直保留在 dom 元素上，直到 dom 编译结束后，会自动去除 -->
 
 
-    <div v-once>v-once: {{ msg }}</div>     <!-- 只渲染元素一次，随后的重新渲染，元素及其所有的子节点将被视为静态内容并跳过 -->
+    <div v-once>v-once: {{ msg }}</div>                     <!-- 只渲染元素一次，随后的重新渲染，元素及其所有的子节点将被视为静态内容并跳过 -->
 
 
-    <div v-text="msg">v-text: 该内容会被清空并覆盖</div>      <!-- 和下面的一样 -->
+    <div v-text="msg">v-text: 该内容会被清空并覆盖</div>       <!-- 和下面的一样 -->
     <div v-text="msg">----</div>
     <div>{{msg}}</div>
 
 
-    <div>----{{msg}}----</div>              <!-- 只替换自己"{{msg}}"，不清空元素内容 -->
+    <div>----{{msg}}----</div>                              <!-- 只替换自己"{{msg}}"，不清空元素内容 -->
 
 
     <div v-text="sayHello">{{ msg }}</div>

@@ -45,7 +45,7 @@ export default {
     },
     methods: {
 
-        ...mapMutations(['countIncrement']),
+        ...mapMutations('count',['countIncrement']),
 
         handleInput(e) {
 

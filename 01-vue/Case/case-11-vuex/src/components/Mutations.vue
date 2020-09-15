@@ -11,7 +11,9 @@
 
         <br>
 
-        doubleCount: {{ countDouble }}
+        doubleCount:
+        <!--{{ countDouble }}-->                            <!-- 未开启命名空间 -->
+        {{ $store.getters['count/countDouble'] }}           <!-- 开启命名空间 -->
 
         <br>
 
@@ -54,12 +56,12 @@ export default {
     },
     computed: {
 
-        ...mapState([ 'count', 'msg', 'obj']),
-        ...mapGetters(['countAdd', 'countDouble'])
+        ...mapState('count', ['count', 'msg', 'obj']),
+        ...mapGetters('count', ['countAdd', 'countDouble']),
     },
     methods: {
 
-        ...mapMutations(['countIncrement']),
+        ...mapMutations('count', ['countIncrement']),
 
         handleClick() {
 
@@ -74,27 +76,33 @@ export default {
              * @params: 传入多个参数
              */
 
+                // this.countIncrement();
 
-            // this.countIncrement();
+
+                // this.$store.commit('countIncrement');                // 未传参，仅提交载荷
+
+                // this.$store.commit('countIncrement', 10);            // 传入单个参数，并提交载荷
+
+                // this.$store.commit('countIncrement', {num: 10});     // 传入多个参数，并提交载荷
+
+                // this.$store.commit({                                 // 以对象的形式提交
+                //
+                //     type: "COUNT_INCREMENT",                         // 使用常量替代 Mutation 事件类型
+                //
+                //     // type: "countIncrement",
+                //
+                //     num: 10,
+                // });
+
+                // this.$store.commit(CHANGE_OBJ);
 
 
-            // this.$store.commit('countIncrement');                // 未传参，仅提交载荷
+            const num = Math.floor(Math.random() * 10);
 
-            // this.$store.commit('countIncrement', 10);            // 传入单个参数，并提交载荷
+            this.$store.dispatch('count/countIncrement', {num}).then(() => {
 
-            // this.$store.commit('countIncrement', {num: 10});     // 传入多个参数，并提交载荷
-
-            this.$store.commit({                                    // 以对象的形式提交
-
-                type: "COUNT_INCREMENT",                            // 使用常量替代 Mutation 事件类型
-
-                // type: "countIncrement",
-
-                num: 10,
+                alert('count值已增加');
             });
-
-
-            this.$store.commit(CHANGE_OBJ);
         },
 
         handleInput(e) {

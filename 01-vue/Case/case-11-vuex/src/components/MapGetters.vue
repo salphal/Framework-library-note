@@ -20,7 +20,7 @@ export default {
     name: "MapGetters",
     computed: {
 
-        ...mapGetters(['countDouble', 'countAdd'])
+        ...mapGetters('count', ['countDouble', 'countAdd'])
     }
 }
 </script>
