@@ -107,11 +107,11 @@ const vm = new Vue({
  *
  * watch: {
  *
- *     targetKey: callback(newVal, oldVal),                     // function
+ *     targetKey: callback(newVal, oldVal),         // function
  *
- *     targetKey: 'methodStr',                                  // string
+ *     targetKey: 'methodStr',                      // string
  *
- *     targetKey: {                                             // object
+ *     targetKey: {                                 // object
  *
  *
  *         handle: callback(newVal, oldVal),        // must-condition
@@ -123,14 +123,14 @@ const vm = new Vue({
  *         options ...
  *     },
  *
- *     targetKey: [                                             // array
+ *     targetKey: [                                 // array
  *
  *         targetKey: callback,
  *         targetKey: string,
  *         targetKey: object,
  *     ],
  *
- *     'targetObj.prop': callback, methodStr                    // 监听对象中的指定属性( 属性名必须是字符串 )
+ *     'targetObj.prop': callback, methodStr        // 监听对象中的指定属性( 属性名必须是字符串 )
  * }
  */
 
@@ -139,7 +139,7 @@ const vm = new Vue({
 
 
 /**
- * vm.$watch(target, options: obj);                             // two params
+ * vm.$watch(target, options: obj);                 // two params
  *
  * @target: targetData | targetObj | 'targetObj.prop' | computedFn;
  *
@@ -153,7 +153,7 @@ const vm = new Vue({
  * }
  *
  *
- * vm.$watch(target, callback, ?options: obj);                  // three params
+ * vm.$watch(target, callback, ?options: obj);      // three params
  *
  *
  * @callback: function() {
