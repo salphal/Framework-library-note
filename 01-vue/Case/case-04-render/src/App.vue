@@ -38,7 +38,6 @@ import BaseSlots from "./components/BaseSlots";
 export default {
 
     name: 'App',
-
     components: {
         BaseSlots,
         BaseLevel,
