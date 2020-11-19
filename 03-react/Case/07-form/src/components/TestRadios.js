@@ -2,22 +2,23 @@
 
 
 import React, {Component} from "react";
-import {Checkboxs} from "./Checkboxs";
+import RadioGroup from "./Radios";
 import {getAllStudents} from "../services/students";
+
 
 
 //-------------------------------------------------------------------------------------------------------------------//
 
 
 export {
-    TestCheckboxs
+    TestRadios
 }
 
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
 
 
-class TestCheckboxs extends Component {
+class TestRadios extends Component {
 
     constructor(props) {
 
@@ -25,16 +26,8 @@ class TestCheckboxs extends Component {
 
         this.state = {
 
-            // datas: [
-            //     {value: 'football', text: '足球'},
-            //     {value: 'basketball', text: '篮球'},
-            //     {value: 'movie', text: '电影'},
-            // ],
-            // name: 'loves',
-            // chooseDatas: ['football'],
-
             datas:[],
-            chooseDatas:[]
+            value: ''
         };
     }
 
@@ -47,11 +40,11 @@ class TestCheckboxs extends Component {
         })
     }
 
-    onChange = (newArr) => {
+    onChange = (val) => {
 
         this.setState({
 
-            chooseDatas: newArr
+            value: val
         })
     };
 
@@ -60,7 +53,7 @@ class TestCheckboxs extends Component {
         return (
 
             <>
-                <Checkboxs
+                <RadioGroup
                     name='loves'
                     {...this.state}
                     handleChange={this.onChange}

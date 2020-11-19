@@ -2,50 +2,52 @@
 
 
 import React, {Component} from "react";
-import {ModalContent} from "../ModalContent"
-import "./index.css";
 
 
 //-------------------------------------------------------------------------------------------------------------------//
 
 
 export {
-    Modal
+    CmpA,
+    CmpB,
 }
 
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
 
 
-class Modal extends Component {
-
-    // static defaultProps = {
-    //     bgColor: props.bgColor || 'rgba(0,0,0,.5)',
-    // };
+class CmpA extends Component {
 
     constructor(props) {
 
         super(props);
 
-        this.state = {
-            bgColor: props.bgColor || 'rgba(0,0,0,.5)',
-        };
+        this.state = {};
     }
 
     render() {
 
         return (
 
-            <div
-                className="modal"
-                style={{
-                    backgroundColor: this.state.bgColor
-                }}
-                onClick={this.props.isShowModal}
-            >
-                < ModalContent hideModal={this.props.isHideModal}/>
+            <h1>Cmp_A, props.a: {this.props.a}</h1>
+        );
+    }
+}
 
-            </div>
+class CmpB extends Component {
+
+    constructor(props) {
+
+        super(props);
+
+        this.state = {};
+    }
+
+    render() {
+
+        return (
+
+            <h1>Cmp_B, props.b: {this.props.b}</h1>
         );
     }
 }

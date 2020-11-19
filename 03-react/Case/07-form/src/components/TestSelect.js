@@ -2,22 +2,23 @@
 
 
 import React, {Component} from "react";
-import {Checkboxs} from "./Checkboxs";
+import {Select} from "./Select";
 import {getAllStudents} from "../services/students";
+
 
 
 //-------------------------------------------------------------------------------------------------------------------//
 
 
 export {
-    TestCheckboxs
+    TestSelect
 }
 
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
 
 
-class TestCheckboxs extends Component {
+class TestSelect extends Component {
 
     constructor(props) {
 
@@ -25,16 +26,8 @@ class TestCheckboxs extends Component {
 
         this.state = {
 
-            // datas: [
-            //     {value: 'football', text: '足球'},
-            //     {value: 'basketball', text: '篮球'},
-            //     {value: 'movie', text: '电影'},
-            // ],
-            // name: 'loves',
-            // chooseDatas: ['football'],
-
             datas:[],
-            chooseDatas:[]
+            value: ''
         };
     }
 
@@ -47,11 +40,11 @@ class TestCheckboxs extends Component {
         })
     }
 
-    onChange = (newArr) => {
+    onChange = (val) => {
 
         this.setState({
 
-            chooseDatas: newArr
+            value: val
         })
     };
 
@@ -59,13 +52,13 @@ class TestCheckboxs extends Component {
 
         return (
 
-            <>
-                <Checkboxs
+            <React.Fragment>
+                <Select
                     name='loves'
                     {...this.state}
                     handleChange={this.onChange}
                 />
-            </>
+            </React.Fragment>
         );
     }
 }

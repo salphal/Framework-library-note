@@ -4,20 +4,13 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {commonTypes} from "../../utils/commonTypes";
+import {withDataGroup} from "../hoc/withDataGroup";
 
 
 //-------------------------------------------------------------------------------------------------------------------//
 
 
-export {
-    Checkboxs
-}
-
-
-//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
-
-
-class Checkboxs extends Component {
+class Checkbox extends Component {
 
     static defaultProps = {
 
@@ -27,12 +20,12 @@ class Checkboxs extends Component {
 
     static propTypes = {
 
-        datas: commonTypes.groupDatas,
         name: PropTypes.string.isRequired,
+        datas: commonTypes.groupDatas,
         chooseDatas: commonTypes.chooseDatas,
-        onChange: PropTypes.func
+        onChange: PropTypes.func,
+        info: commonTypes.singleData
     };
-
 
     constructor(props) {
 
@@ -48,22 +41,22 @@ class Checkboxs extends Component {
 
     getCheckBoxes() {
 
-        return this.props.datas.map(item => {
+        // return this.props.datas.map(item => {
 
             return (
 
-                <label key={item.value}>
-                    {item.text}
+                <label>
+                    {this.props.info.text}
                     <input
                         type="checkbox"
                         name={this.props.name}
-                        value={item.value}
-                        checked={this.props.chooseDatas.includes(item.value)}
+                        value={this.props.info.value}
+                        checked={this.props.chooseDatas.includes(this.props.info.value)}
                         onChange={this.handleChange}
                     />
                 </label>
             );
-        });
+        // });
     }
 
     handleChange = (e) => {
@@ -87,12 +80,18 @@ class Checkboxs extends Component {
 
         return (
 
-            <>
+            <React.Fragment>
                 {this.getCheckBoxes()}
-            </>
+            </React.Fragment>
         );
     }
 }
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+export default withDataGroup(Checkbox);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

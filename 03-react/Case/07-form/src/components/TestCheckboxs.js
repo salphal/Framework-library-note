@@ -2,7 +2,7 @@
 
 
 import React, {Component} from "react";
-import {Checkboxs} from "./Checkboxs";
+import CheckBoxGroup from "./Checkbox";
 import {getAllStudents} from "../services/students";
 
 
@@ -60,7 +60,7 @@ class TestCheckboxs extends Component {
         return (
 
             <>
-                <Checkboxs
+                <CheckBoxGroup
                     name='loves'
                     {...this.state}
                     handleChange={this.onChange}
