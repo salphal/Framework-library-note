@@ -1,7 +1,10 @@
 <template>
 
 
-    <base-level :level="1" @click="handleClick">
+    <base-level
+            :level="1"
+            @click="handleClick"
+    >
 
         <template #default="{text}">
 

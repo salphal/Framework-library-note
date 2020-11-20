@@ -23,7 +23,6 @@ export default {
 
     render(h, context) {
 
-
         const {props, slots, scopedSlots, data, parent, listeners, injections, children} = context;
 
         console.log("context: ", context);

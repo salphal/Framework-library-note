@@ -41,7 +41,18 @@ class Dom extends Component {
          * * 建议赋值: ref: ( obj | fn );
          */
 
+
+        /**
+         * 谨慎使用 ref
+         *
+         *
+         * 1) 调用真实 DOM 对象中的方法时使用
+         *
+         * 2) 需要调用某个类组件中的方法时使用
+         */
+
         // console.log(this.refs);
+
 
         this.refs.domRef.focus();
     };
