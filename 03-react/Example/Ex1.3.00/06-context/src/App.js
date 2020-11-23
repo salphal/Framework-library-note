@@ -2,7 +2,7 @@
 
 
 import React, {Component} from "react";
-
+import {OldContext} from "./components/OldContext";
 
 
 //-------------------------------------------------------------------------------------------------------------------//
@@ -18,13 +18,12 @@ export {
 
 class App extends Component {
 
+
     constructor(props) {
 
         super(props);
 
-        this.state = {
-
-        };
+        this.state = {};
     }
 
     render() {
@@ -32,7 +31,7 @@ class App extends Component {
         return (
 
             <React.Fragment>
-
+                <OldContext/>
             </React.Fragment>
         );
     }
