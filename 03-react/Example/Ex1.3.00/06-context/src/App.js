@@ -3,7 +3,7 @@
 
 import React, {Component} from "react";
 import {OldContext} from "./components/OldContext";
-
+import {NewContext} from "./components/NewContext";
 
 //-------------------------------------------------------------------------------------------------------------------//
 
@@ -31,7 +31,8 @@ class App extends Component {
         return (
 
             <React.Fragment>
-                <OldContext/>
+                {/*<OldContext/>*/}
+                <NewContext/>
             </React.Fragment>
         );
     }

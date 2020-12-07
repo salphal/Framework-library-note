@@ -26,10 +26,10 @@ ReactDOM.render(
                 limit={9}
                 panelNumber={5}
             />
-            <hr/>
+            {/*<hr/>*/}
 
-            <h3>PagerTest</h3>
-            <PagerTest/>
+            {/*<h3>PagerTest</h3>*/}
+            {/*<PagerTest/>*/}
             <hr/>
 
         </React.Fragment>
