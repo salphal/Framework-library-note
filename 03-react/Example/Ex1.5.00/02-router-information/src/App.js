@@ -2,9 +2,13 @@
 
 
 import React, {PureComponent} from "react";
+import {RouterInformation} from "./components/RouterInformation";
+
 
 
 //-------------------------------------------------------------------------------------------------------------------//
+
+
 
 
 class App extends PureComponent {
@@ -23,7 +27,7 @@ class App extends PureComponent {
         return (
 
             <React.Fragment>
-
+                <RouterInformation/>
             </React.Fragment>
         );
     }

@@ -51,7 +51,7 @@ class TestFadeTransition extends PureComponent {
                 </FadeTransition>
                 <hr/>
 
-                <h3>WwitchTransition > FadeTransition</h3>
+                <h3>SwitchTransition > FadeTransition</h3>
                 <SwitchTransition>
                     <FadeTransition
                         key={this.state.stateDes}

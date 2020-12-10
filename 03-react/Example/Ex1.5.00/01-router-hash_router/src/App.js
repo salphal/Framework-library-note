@@ -2,6 +2,8 @@
 
 
 import React, {PureComponent} from "react";
+import {HashRouterExample} from "./components/HashRouterExample";
+
 
 
 //-------------------------------------------------------------------------------------------------------------------//
@@ -23,7 +25,7 @@ class App extends PureComponent {
         return (
 
             <React.Fragment>
-
+                <HashRouterExample/>
             </React.Fragment>
         );
     }

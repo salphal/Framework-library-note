@@ -5,10 +5,7 @@ import React, {PureComponent} from "react";
 import {TestFadeTransition} from "./components/TestFadeTransition";
 
 
-
 //-------------------------------------------------------------------------------------------------------------------//
-
-
 
 
 class App extends PureComponent {
