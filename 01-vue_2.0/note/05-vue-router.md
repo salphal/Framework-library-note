@@ -260,6 +260,7 @@ routes = [
 
 {
   path: '/activity',
+
   component: () => import('./views/Activity'),
   
     children: [                                         // 嵌套路由

@@ -646,7 +646,7 @@ render () {
 <div>{{ msg | capitalize }}</div>
 
 <!-- 在jsx中使用过滤器 -->
-<div>{this.$options.filters('capitalize')(this.msg)}</div>
+<div>{ this.$options.filters('capitalize')(this.msg) }</div>
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
