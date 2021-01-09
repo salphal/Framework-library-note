@@ -27,7 +27,7 @@ import React, {Component} from "react";
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
 
 
-const ctx = React.createContext({                   // default value
+const ctx = React.createContext({       // default value
     name: 'alpha',
     age: 18
 });

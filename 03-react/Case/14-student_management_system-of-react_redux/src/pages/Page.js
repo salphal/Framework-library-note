@@ -4,35 +4,39 @@
 import React,{useState,useEffect,useReducer,useContext,useCallback,useMemo,useRef,useImperativeHandle,useLayoutEffect,useDebugValue} from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter as Router, Route, Link, Switch, NavLink, Redirect, withRouter} from "react-router-dom";
+import StudentSearchBar from "../components/StudentSearchBar";
+import StudentTable from "../components/StudentTable";
+import Pager from "../components/Pager";
+import store from "../store";
+import {fetchStudents} from "../store/actions/searchResult";
+import Loading from "../components/Loading";
+import {Modal} from "../components/Modal";
 
-import Counter01 from "../components/Counter01";
-import Counter02 from "../components/Counter02";
 
 //-------------------------------------------------------------------------------------------------------------------//
 
 
-function Page(props) {
+class Page extends React.PureComponent {
 
-    return (
+    componentDidMount() {
 
-        <React.Fragment>
-            <Counter02/>
-            <hr/>
-            <Counter01/>
-            <hr/>
-        </React.Fragment>
-    );
+        store.dispatch(fetchStudents());
+    }
+
+    render() {
+        return (
+
+            <React.Fragment>
+
+                <Loading/>
+                <StudentSearchBar/>
+                <StudentTable/>
+                <Pager/>
+
+            </React.Fragment>
+        );
+    }
 }
-
-
-Page.defaultProps = {
-
-};
-
-
-Page.propTypes = {
-
-};
 
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//

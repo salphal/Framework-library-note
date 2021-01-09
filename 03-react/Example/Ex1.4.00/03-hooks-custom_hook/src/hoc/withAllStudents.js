@@ -12,14 +12,6 @@ function withAllStudents(Comp) {
 
     return class withAllStudentsWrapper extends PureComponent {
 
-        static defaultProps = {
-
-        };
-
-        static propTypes = {
-
-        };
-
         constructor(props) {
 
             super(props);

@@ -34,11 +34,14 @@ function Child(props) {
 
     return (
         <React.Fragment>
+
             <h3>Child Context</h3>
             <hr/>
+
             <h3>SubChild Context</h3>
             <SubChild/>
             <hr/>
+
         </React.Fragment>
     );
 }

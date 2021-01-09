@@ -3,6 +3,7 @@
 
 import store from "./index";
 import {add, asyncDecrease, asyncIncrease, decrease, increase} from "./actions";
+import {setIsLoading} from "./actions/searchResult";
 
 
 //-------------------------------------------------------------------------------------------------------------------//
@@ -32,7 +33,6 @@ window.add = function (num) {
 
     store.dispatch(add(num));
 };
-
 
 
 console.log(store.getState());

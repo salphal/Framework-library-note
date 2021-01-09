@@ -9,14 +9,6 @@ import React, {PureComponent} from "react";
 
 class SubChild extends PureComponent {
 
-    static propTypes = {
-
-    };
-
-    static defaultProps = {
-
-    };
-
     constructor(props) {
 
         super(props);

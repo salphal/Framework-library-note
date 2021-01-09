@@ -37,14 +37,17 @@ class App extends Component {
         return (
 
             <React.Fragment>
+
                 <div
                     className="app"
                     onClick={this.handleClick}
                 >
                     <DefaultIndex/>
                     <hr/>
+
                     <CustomIndex/>
                 </div>
+
             </React.Fragment>
         );
     }

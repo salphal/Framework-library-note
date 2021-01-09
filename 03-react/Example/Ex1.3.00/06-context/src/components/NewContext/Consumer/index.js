@@ -44,7 +44,9 @@ function Child(props) {
 
     return (
         <React.Fragment>
+
             <h3>Child Context</h3>
+
             <ctx.Consumer>
                 {(val) => {
                     return (
@@ -55,10 +57,14 @@ function Child(props) {
                     );
                 }}
             </ctx.Consumer>
+
             <hr/>
+
             <h3>SubChild Context</h3>
             <SubChild/>
+
             <hr/>
+
         </React.Fragment>
     );
 }

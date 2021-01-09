@@ -50,6 +50,7 @@ class Child extends Component {
                 <ctx2.Provider
                     value={this.state}
                 >
+
                     <h3>Child Context</h3>
                     <ctx1.Consumer>
                         {(val) => {
@@ -62,10 +63,13 @@ class Child extends Component {
                         }}
                     </ctx1.Consumer>
                     <hr/>
+
                     <h3>SubChild Context</h3>
                     <SubChild/>
                     <hr/>
+
                 </ctx2.Provider>
+
             </React.Fragment>
         );
     }

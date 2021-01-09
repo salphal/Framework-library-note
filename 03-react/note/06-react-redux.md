@@ -385,38 +385,99 @@ React 解决了 Model -> View 的问题
  * 连接 Redux 和 React
  */
 
-presentational_compoonent           // 显示组件: 用于显示 UI 界面
-container_component                 // 容器组件: 仅用于传递数据
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+
+
+        + ------------ +       + ----------------- +           + ------------------ +
+        |              |       |                   |   data    |                    |
+        |    Redux     |       |    react-redux    | --------> |       React        |
+        |              | ====> |                   |   event   |  Render_interface  |
+        |   database   |       |                   | --------> |  trigger_event     |
+        |              |       |                   |           |                    |
+        + ------------ +       + ----------------- +           + ------------------ +
+                                                        
+           公共数据仓库            连接 Redux 和 React           根据传递的数据渲染界面和触发事件
+    
+    
+        react-redux: {
+        
+            <Provider/>         // 普通组件，无任何 UI界面，该组件将 redux_store 存放到指定上下文中
+            connect             // 高阶组件，用于链接 仓库 和 组件
+            ...
+        }
+        
+        /**
+         ** 结构模拟 <ContainerCmp> <PresentationalCmp/> </ContainerCmp>
+         ** 实际结构 <PresentationalCmp ownProp={'组件外部传递的普通属性，最终仍然会作为普通属性传递'} />
+         *
+         *
+         ** 1) connect(?mapStateToProps, ?(mapDispatchToProps ｜ creators: obj) ): hoc;
+         ** 2) hoc(PresentationalCmp);
+         *
+         *
+         * @mapStateToProps(state, ownProps):
+         *      @state: 整个仓库的数据
+         *      @ownProps: 组件外部传递的普通数据
+         *
+         * @mapDispatchToProps(dispatch): 将 store.dispatch 作为参数传递
+         *      @dispatch: store.dispatch
+         * @creators: 当事件发生时，会根据传入对象事件名调用 dispatch 处理相对应的 action
+         *            ( connect 仅根据 creator 中事件名对应的 action 触发，无法做其他复杂处理 )
+         *
+         * @hoc:
+         *      @PresentationalCmp
+         *
+         *
+         ** conect(mapStateToProps);        // 不传递第二个参数时，则可以接受到 props.dispatch
+         *                                  // ( 不推荐使用 )
+         */
 
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
 
 
-    + ------------ +       + ----------------- +           + ------------------ +
-    |              |       |                   |   data    |                    |
-    |    Redux     |       |    react-redux    | --------> |       React        |
-    |              | ====> |                   |   event   |  Render_interface  |
-    |   database   |       |                   | --------> |  trigger_event     |
-    |              |       |                   |           |                    |
-    + ------------ +       + ----------------- +           + ------------------ +
-                                                    
-       公共数据仓库            连接 Redux 和 React           根据传递的数据渲染界面和触发事件
+    presentational_cmp           // 显示组件: 用于显示 UI 界面
+    container_cmp                // 容器组件: 仅用于传递数据
 
 
-    react-redux: {
-    
-        <Provider/>         // 普通组件，无任何 UI界面，该组件将 redux_store 存放到指定上下文中
-        connect             // 高阶组件，用于链接 仓库 和 组件
-        ...
-    }
-    
-    
-    connect
-    
-    
-
-
+                            + ------------------------ +                            + ------------------------ +            
+                            |                          |      updata                |                          |        
+                            |         Store            | <------------------------- |         Reducer          |        
+                            |                          |                            |                          |            
+                            + ------------------------ +                            + ------------------------ +            
+                                                |                                                       |
+                                                |   transfer_data                                       |
+                                                |                                                       |
+                 + ---------------------------- + ----------------------------- +                       |
+                 |                              |                               |                       |
+                 |                              |                               |                       |
+    + ----- container_cmp ---- +    + ----- container_cmp ---- +    + ----- container_cmp ---- +        |
+    |  + ------------------ +  |    |  + ------------------ +  |    |  + ------------------ +  |        |
+    |  | presentational_cmp |  |    |  | presentational_cmp |  |    |  | presentational_cmp |  |        |
+    |  + ------------------ +  |    |  + ------------------ +  |    |  + ------------------ +  |        |
+    + ------------------------ +    + ------------------------ +    + ------------------------ +        |
+                 |                              |                               |                       |
+                 |                              |                               |                       |
+                 + ---------------------------- + ----------------------------- +                       |
+                                                |                                                       |
+                                                |   trigger_event ( dispatch(action); )                 |
+                                                |                                                       |
+                                                + ----------------------------------------------------- +
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+

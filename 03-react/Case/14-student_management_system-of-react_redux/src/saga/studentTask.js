@@ -14,7 +14,7 @@ function* fetch() {
 
     yield put(setIsLoading(true));
 
-    const condition = yield select(state => state.student.condition);
+    const condition = yield select(state => state.searchCondition);
 
     try {
 

@@ -25,7 +25,7 @@ export default handleActions({
     }),
     [setIsLoading]: (state, {payload})=> ({
         ...state,
-        ...payload
+        isLoading: payload
     }),
 
 }, {

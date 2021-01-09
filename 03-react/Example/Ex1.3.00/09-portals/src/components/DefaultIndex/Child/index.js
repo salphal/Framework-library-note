@@ -10,14 +10,6 @@ import {SubChild} from "../SubChild";
 
 class Child extends PureComponent {
 
-    static propTypes = {
-
-    };
-
-    static defaultProps = {
-
-    };
-
     constructor(props) {
 
         super(props);

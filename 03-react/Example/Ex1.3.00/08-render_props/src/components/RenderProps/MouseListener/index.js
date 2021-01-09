@@ -63,7 +63,7 @@ class MouseListener extends PureComponent {
                     {/*{this.props.children(this.state)}*/}
 
                     {/**  **/}
-                    {this.props.render ? this.props.render(this.state) : "defaut vavlue"}
+                    {this.props.render ? this.props.render(this.state) : "defaut value"}
                 </div>
             </React.Fragment>
         );

@@ -3,6 +3,7 @@
 
 import {all} from "redux-saga/effects";
 import counterTake from "./counterTake";
+import studentTask from "./studentTask";
 
 
 //-------------------------------------------------------------------------------------------------------------------//
@@ -13,6 +14,7 @@ export default function* () {
     yield all([
 
         counterTake(),
+        studentTask()
     ]);
 
     console.log('[saga-end]');
