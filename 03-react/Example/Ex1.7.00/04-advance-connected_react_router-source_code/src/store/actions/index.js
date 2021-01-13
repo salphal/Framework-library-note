@@ -8,6 +8,7 @@ import searchResult from "./searchResult";
 
 
 /** step_01 **/
+// import {connectRouter} from '../../connected-react-router';
 import {connectRouter} from 'connected-react-router';
 
 
