@@ -17,7 +17,7 @@ import {connectRouter, routerMiddleware} from "connected-react-router";
 
 export default function (opts = {}) {
 
-    const options = getOptions();
+    let options = getOptions();
 
     let app = {
         model,
@@ -25,7 +25,7 @@ export default function (opts = {}) {
         router,
         _routweer: null,
         start,
-
+        use
     },
         sagaMid,
         generatorFuncs;
@@ -38,6 +38,14 @@ export default function (opts = {}) {
     function router(routerFunc) {
 
         app._router = routerFunc;
+    }
+
+    function use(plugin) {
+
+        options = {
+            ...options,
+            ...plugin
+        };
     }
 
     function start(selector) {
@@ -208,7 +216,7 @@ export default function (opts = {}) {
 
                 if (options.onEffect) {
 
-                    func = extendFunc(func);
+                    func = extendFunc(func, item.model);
                 }
 
                 yield sagaEffects.takeEvery(item.type, func);
@@ -216,7 +224,9 @@ export default function (opts = {}) {
         });
     }
 
-    function extendFunc(oldEffect) {
+    function extendFunc(oldEffect, model) {
+
+        console.log(model);
 
         return options.onEffect(oldEffect, sagaEffects, model);
     }

@@ -2,6 +2,7 @@
 
 
 import React, {useRef} from "react";
+import {Modal} from "../Modal";
 
 
 //-------------------------------------------------------------------------------------------------------------------//
@@ -20,6 +21,13 @@ export default function (props) {
     return (
 
         <React.Fragment>
+            {
+                props.isLoading && <Modal>
+                    <div style={{color: '#fff', fontSize: '2em'}}>
+                        Loading...
+                    </div>
+                </Modal>
+            }
             <div>
                 <button onClick={props.onAsyncDecrease}>asyncDecrease</button>
                 <button onClick={props.onDecrease}>decrase</button>
@@ -36,7 +44,6 @@ export default function (props) {
         </React.Fragment>
     );
 }
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

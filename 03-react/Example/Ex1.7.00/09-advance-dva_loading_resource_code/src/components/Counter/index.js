@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-import {connect} from "../../dva";
+import {connect} from "react-redux";
 import Comp from "./component";
 
 
@@ -10,7 +10,8 @@ import Comp from "./component";
 
 const mapStateToProps = state => ({
 
-    number: state.counter
+    number: state.counter,
+    isLoading: state.loading.models.counter
 
 }), mapDispatchToProps = dispatch => ({
 

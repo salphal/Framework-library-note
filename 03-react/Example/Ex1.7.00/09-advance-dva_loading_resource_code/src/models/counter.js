@@ -73,28 +73,28 @@ export default {
     },
     subscriptions: {
 
-        resizeIncrease(obj) {
-
-            // console.log('[subscriptions.method(obj)]: ', obj);
-            // dispatch: ƒ (action)
-            // history: {length: 2, action: "POP", location: {…}, createHref: ƒ, push: ƒ, …}
-            // __proto__: Object
-
-            const {dispatch} = obj;
-
-            window.onresize = () => {
-
-                dispatch({type: 'increase'});
-            };
-        },
-        resizeDecrease({dispatch, history}) {
-
-            history.listen(() => {
-
-                /** 触发多次push ，因 routerRedux of connected-react-router 库中的 bug**/
-                dispatch({type: 'decrease'})
-            });
-        }
+        // resizeIncrease(obj) {
+        //
+        //     // console.log('[subscriptions.method(obj)]: ', obj);
+        //     // dispatch: ƒ (action)
+        //     // history: {length: 2, action: "POP", location: {…}, createHref: ƒ, push: ƒ, …}
+        //     // __proto__: Object
+        //
+        //     const {dispatch} = obj;
+        //
+        //     window.onresize = () => {
+        //
+        //         dispatch({type: 'increase'});
+        //     };
+        // },
+        // resizeDecrease({dispatch, history}) {
+        //
+        //     history.listen(() => {
+        //
+        //         /** 触发多次push ，因 routerRedux of connected-react-router 库中的 bug**/
+        //         dispatch({type: 'decrease'})
+        //     });
+        // }
     }
 };
 

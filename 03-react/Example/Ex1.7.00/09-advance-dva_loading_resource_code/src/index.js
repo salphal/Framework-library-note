@@ -10,6 +10,7 @@ import counter from "./models/counter";
 import students from "./models/students";
 import {createBrowserHistory} from "history";
 import {takeEvery} from "redux-saga/effects";
+import createLoading from "./dva/dva-loading";
 
 
 //-------------------------------------------------------------------------------------------------------------------//
@@ -92,6 +93,10 @@ const app = dva({
     // ]
 
 });
+
+
+app.use(createLoading());
+
 
 /** 2) 返回一个React节点，应用程序启动后，会自动渲染该节点 **/
 // app.router(() => <App/>);
