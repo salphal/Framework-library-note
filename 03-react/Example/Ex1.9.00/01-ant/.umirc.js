@@ -1,17 +1,27 @@
-
 // ref: https://umijs.org/config/
 export default {
 	treeShaking: true,
+
 
 	// routes: [
 	//   {
 	//     path: '/',
 	//     component: '../layouts/index',
 	//     routes: [
-	//       { path: '/', component: '../pages/index' }
+	//       { path: '/', component: '../pages/index' },
+	//       { path: '/student', component: '../pages/student' },
 	//     ]
 	//   }
 	// ],
+
+
+	proxy: {
+		"/api": {
+			target: "http://api.duyiedu.com/",
+			changeOrigin: true,
+		}
+	},
+
 
 	plugins: [
 		// ref: https://umijs.org/plugin/umi-plugin-react.html
@@ -19,7 +29,7 @@ export default {
 			antd: true,
 			dva: true,
 			dynamicImport: false,
-			title: 'test',
+			title: '15-student_management_system-of-umijs',
 			dll: false,
 
 			routes: {
@@ -33,4 +43,4 @@ export default {
 			},
 		}],
 	],
-};
+}
