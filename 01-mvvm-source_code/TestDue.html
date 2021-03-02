@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="test">
+    hello, {{content}} {{descript}}
+    <br/>
+    <span>{{descript}}</span>
+    <br/>
+    <input
+        type="text"
+        v-model="obj.x"
+    />
+        {{obj.x}}
+    <br/>
+    <ul>
+        <li v-for="(key) in arr">
+            name: {{key.name}}
+            age: {{key.age}}
+        </li>
+    </ul>
+</div>
+
+<script type="module">
+
+	import Due from "./core";
+
+	window.test = new Due({
+		el: 'test',
+		data: {
+			content: 'world',
+			descript: 'just do it',
+			obj: {
+				x: 1,
+				y: 2,
+			},
+			arr: [
+				{
+					name: 'alpha',
+					age: 17,
+				},
+				{
+					name: 'beta',
+					age: 18
+				}
+			],
+		}
+	});
+
+</script>
+
+</body>
+</html>
