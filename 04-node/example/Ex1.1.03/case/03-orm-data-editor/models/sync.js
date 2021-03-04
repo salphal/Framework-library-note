@@ -1,12 +1,12 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-require("./Admin.js");
-require("./Book.js");
-require("./Class.js");
-require("./Student.js");
+require("./Admin");
+require("./Book");
+require("./Class");
+require("./Student");
 
-const sequelize = require("./db.js");
+const sequelize = require("./db");
 
 
 //-------------------------------------------------------------------------------------------------------------------//

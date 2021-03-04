@@ -68,7 +68,7 @@ const Admin = sequelize.define(
 
 // (async function () {
 //
-// 	/** 同步 model 到数据库 **/
+// 	/** 同步指定 model 到数据库 **/
 // 	await Admin.sync({
 // 		alter: true
 // 	});
