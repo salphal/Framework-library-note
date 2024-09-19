@@ -20,7 +20,7 @@
         "express": "^4.17.1",
         "md5": "^2.3.0",
         "moment": "^2.29.1",
-        "path-to-regexp": "^6.2.0",
+        "path-to-regexp": "^6.3.0",
         "validate.js": "^0.13.1"
     },
     "devDependencies": {
